@@ -9,6 +9,7 @@
 
 html {
     height: 100%;
+    font-size: 12px;
 }
 
 body {
@@ -26,4 +27,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+    html {
+        font-size: 2vw;
+    }
 }

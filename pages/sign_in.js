@@ -1,8 +1,11 @@
+import Input from "../components/Input"
+
+
 export default function SignIn()
 {
     return (
         <div>
-            Sign In
+            <Input></Input>
         </div>
     )
 }

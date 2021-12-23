@@ -128,7 +128,7 @@ export default class Loader extends react.Component {
     render() {
         return (
             <div id={styles.wrapper} style={{ opacity: this.state.opacity, display: this.state.display }}>
-                <div className={this.state.isLogo && ('logo ' + styles.logo)} style={{ opacity: this.state.wordOpacity }}>{this.state.word}</div>
+                <div className={this.state.isLogo ? ('logo ' + styles.logo) : undefined} style={{ opacity: this.state.wordOpacity }}>{this.state.word}</div>
             </div>
         );
     }
