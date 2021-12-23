@@ -1,0 +1,55 @@
+#root {
+    --transition-config: ease-out 0.2s;
+
+    font-weight: 600;
+    font-size: 18px;
+
+    margin: 50px;
+    display: flex;
+    align-items: stretch;
+
+    width: 1000px;
+}
+
+#input {
+    --outline-width: 2px;
+
+    background: none;
+    min-width: 0;
+    flex-grow: 1;
+    border: none;
+    outline: var(--outline-width) solid var(--decoration-color, var(--input-grey-color));
+    outline-offset: calc(var(--outline-width) * -1);
+    color: var(--decoration-color, var(--background-text-grey-color));
+    font-size: inherit;
+    padding: 1rem;
+    font-weight: inherit;
+    transition: outline-color var(--transition-config), color var(--transition-config);
+}
+
+#input::placeholder {
+    color: var(--decoration-color, var(--input-grey-color));
+}
+
+#input:focus {
+    outline-color: white;
+    color: white;
+}
+
+#button {
+    background-color: var(--input-grey-color);
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+    cursor: pointer;
+    transition: color var(--transition-config), background-color var(--transition-config);
+}
+
+#button>* {
+    color: inherit;
+}
+
+#button:hover {
+    background-color: white;
+    color: black;
+}

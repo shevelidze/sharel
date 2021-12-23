@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 
+:root {
+    --background-text-grey-color: #A9A9A9;
+    --input-grey-color: #5E5E5E;
+    --post-grey-color: #242424;
+    --button-grey-color: #5D5D5D;
+    --comment-area-grey-color: #404040;
+    --subscription-red-color: #F13B3B;
+}
+
 * {
     margin: 0;
     padding: 0;
