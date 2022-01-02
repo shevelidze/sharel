@@ -35,7 +35,7 @@
   --background-color: black;
   background-color: var(--background-color);
   color: var(--text-color);
-  transition: background-color ease-out 0.33s, color ease-out 0.33s;
+  transition: background-color ease-out 0.2s, color ease-out 0.2s;
 }
 
 #buttons_wrapper>a:first-child {

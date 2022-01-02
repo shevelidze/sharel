@@ -7,6 +7,10 @@
     --button-grey-color: #5D5D5D;
     --comment-area-grey-color: #404040;
     --subscription-red-color: #F13B3B;
+
+    --input-button-outline-width: 2px;
+    --input-button-font-size: 18px;
+    --input-button-font-weight: 600;
 }
 
 * {

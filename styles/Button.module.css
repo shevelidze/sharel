@@ -1,0 +1,37 @@
+#root {
+    width: max-content;
+
+    font-size: var(--input-button-font-size);
+    font-weight: var(--input-button-font-weight);
+
+    padding: 0.7em;
+
+    outline: var(--input-button-outline-width) solid var(--button-grey-color);
+    outline-offset: calc(var(--input-button-outline-width) * -1);
+
+    background-color: var(--button-grey-color);
+
+    cursor: pointer;
+
+    --transition-config: ease-out 0.2s;
+    transition: background-color var(--transition-config), outline var(--transition-config), opacity var(--transition-config);
+
+    user-select: none;
+}
+
+#root:hover {
+    background: initial;
+    outline: var(--input-button-outline-width) solid white;
+}
+
+#root.clickable:active {
+    transition: initial;
+
+    background: rgba(255, 255, 255, 0.8)
+}
+
+#root.disabled {
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+}

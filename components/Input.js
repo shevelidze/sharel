@@ -1,10 +1,14 @@
 import react from "react";
 import styles from '../styles/Input.module.css'
+import Button from '../components/Button.js'
 
 export default class Input extends react.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            buttonIsDisabled: false
+        };
+        this.buttonRef = react.createRef();
     }
     async blink(times) {
         let component = this;
@@ -51,22 +55,29 @@ export default class Input extends react.Component {
                     style={this.state.color == undefined ? null : { '--decoration-color': this.state.color, transition: 'none' }}
                     placeholder={this.props.placeholder}
                     autocomplete={this.props.autoComplete === undefined ? 'off' : this.props.autoComplete}
+                    type={this.props.type === undefined ? 'text' : this.props.type}
                     onBlur={this.onBlur()}
                 ></input>
                 {
-                    this.props.buttonClicked !== undefined ?
-                        <div id={styles.button} onClick={this.props.buttonClicked}><div>Button</div></div> :
+                    this.props.buttonProps !== undefined ?
+                        <Button {...this.props.buttonProps} ref={this.buttonRef} displayNoneOnDisabled={true}></Button> :
                         null
                 }
             </div>
         );
     }
 
-    onBlur()
-    {
-        let component = this;
+
+
+    onBlur() {
         return () => {
-            setTimeout(() => { component.blink(3); }, 2000);
+            setTimeout(() => { this.blink(3); }, 2000);
+            this.setState(
+                {
+                    buttonIsDisabled: true
+                }
+            );
         };
+
     }
 }
