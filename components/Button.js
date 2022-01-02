@@ -44,7 +44,7 @@ export default class Button extends react.Component {
         }
         return (
             <div
-                onClick={() => { this.disable(true) }}
+                onClick={this.props.onClick}
                 id={styles.root}
                 className={className}
                 style={this.state.styles}

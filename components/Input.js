@@ -6,7 +6,7 @@ export default class Input extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonIsDisabled: false
+            buttonIsHidden: false
         };
         this.buttonRef = react.createRef();
     }
@@ -48,8 +48,16 @@ export default class Input extends react.Component {
         }
     }
     render() {
+        let buttonComponent = (
+            <div>
+                <Button {...this.props.buttonProps} ref={this.buttonRef} displayNoneOnDisabled={true}></Button>
+            </div>
+        );
         return (
-            <div id={styles.root}>
+            <div
+                id={styles.root}
+                className={this.state.buttonIsHidden ? styles['hidden-button'] : ''}
+            >
                 <input
                     id={styles.input}
                     style={this.state.color == undefined ? null : { '--decoration-color': this.state.color, transition: 'none' }}
@@ -58,10 +66,9 @@ export default class Input extends react.Component {
                     type={this.props.type === undefined ? 'text' : this.props.type}
                     onBlur={this.onBlur()}
                 ></input>
+
                 {
-                    this.props.buttonProps !== undefined ?
-                        <Button {...this.props.buttonProps} ref={this.buttonRef} displayNoneOnDisabled={true}></Button> :
-                        null
+                    this.props.buttonProps !== undefined ? buttonComponent : null
                 }
             </div>
         );
@@ -70,13 +77,10 @@ export default class Input extends react.Component {
 
 
     onBlur() {
-        return () => {
+        return async () => {
             setTimeout(() => { this.blink(3); }, 2000);
-            this.setState(
-                {
-                    buttonIsDisabled: true
-                }
-            );
+            await this.buttonRef.current.disable();
+            this.setState({ buttonIsHidden: true })
         };
 
     }
