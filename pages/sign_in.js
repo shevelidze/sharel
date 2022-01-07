@@ -1,6 +1,7 @@
 import Input from "../components/Input"
 import styles from '../styles/Auth.module.css'
 import Button from "../components/Button"
+import react from "react"
 
 export default function SignIn() {
     return (
@@ -11,7 +12,7 @@ export default function SignIn() {
             <div id={styles['main-block']}>
                 <div className={styles['section']}>
                     <Input placeholder='Email'></Input>
-                    <Input placeholder='Password' type='password' buttonProps={{text: 'hello'}}></Input>
+                    <Input placeholder='Password' type='password'></Input>
                 </div>
                 <Button text='Sign in'></Button>
             </div>

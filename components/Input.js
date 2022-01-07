@@ -62,9 +62,9 @@ export default class Input extends react.Component {
                     id={styles.input}
                     style={this.state.color == undefined ? null : { '--decoration-color': this.state.color, transition: 'none' }}
                     placeholder={this.props.placeholder}
-                    autocomplete={this.props.autoComplete === undefined ? 'off' : this.props.autoComplete}
+                    autoComplete={this.props.autoComplete === undefined ? 'off' : this.props.autoComplete}
                     type={this.props.type === undefined ? 'text' : this.props.type}
-                    onBlur={this.onBlur()}
+                    {...this.props.inputParams}
                 ></input>
 
                 {
@@ -72,16 +72,5 @@ export default class Input extends react.Component {
                 }
             </div>
         );
-    }
-
-
-
-    onBlur() {
-        return async () => {
-            setTimeout(() => { this.blink(3); }, 2000);
-            await this.buttonRef.current.disable();
-            this.setState({ buttonIsHidden: true })
-        };
-
     }
 }
