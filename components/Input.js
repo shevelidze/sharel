@@ -6,7 +6,8 @@ export default class Input extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonIsHidden: false
+            buttonIsHidden: false,
+            inputValue: null
         };
         this.buttonRef = react.createRef();
     }
@@ -66,7 +67,6 @@ export default class Input extends react.Component {
                     type={this.props.type === undefined ? 'text' : this.props.type}
                     {...this.props.inputParams}
                 ></input>
-
                 {
                     this.props.buttonProps !== undefined ? buttonComponent : null
                 }

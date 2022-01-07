@@ -14,12 +14,23 @@ export default class PasswordStrengthLevel extends react.Component {
     }
     render() {
         let level = (this.props.password.length == 0 ? 0 : passwordStrength(this.props.password).id + 1) / 4;
+        let text;
+        if (this.props.text) {
+            text = this.props.text;
+            level = 0.2;
+        }
+        else {
+            text = `Password is ${level == 0 ?
+                'empty' :
+                this.levels[Math.round((this.levels.length - 1) * level)]
+                }`;
+        }
+
+
         return (
             <div id={styles.root} style={{ '--password-strength-level-color': `rgba(255, 255, 255, ${0.15 + level * 0.85})` }}>
-                <div>{`Password is ${level == 0 ?
-                        'empty' :
-                        this.levels[Math.round((this.levels.length - 1) * level)]
-                    }`}
+                <div>
+                    {text}
                 </div>
             </div>
         )
