@@ -91,15 +91,19 @@ export default class SignIn extends react.Component {
             }
         } else {
             let requestBodyObject = {
-                fisrtName: this.inputsValues.firstName,
-                lastName: this.inputsValues.lastName,
-                password: this.inputsValues.password
+                first_name: this.inputsValues.firstName,
+                last_name: this.inputsValues.lastName,
+                email: this.inputsValues.email,
+                password_hash: this.inputsValues.password
             };
             fetch(
                 '/api/sign_up',
                 {
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
                     method: 'POST',
-                    body: requestBodyObject
+                    body: JSON.stringify(requestBodyObject)
                 }
             );
         }
