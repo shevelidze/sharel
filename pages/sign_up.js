@@ -84,8 +84,24 @@ export default class SignIn extends react.Component {
             refsToInputsWithWrongValue.add(this.inputsRefs.password);
             refsToInputsWithWrongValue.add(this.inputsRefs.passwordVeriification);
         }
-        for (let inputRef of refsToInputsWithWrongValue) {
-            inputRef.current.blink(3);
+
+        if (refsToInputsWithWrongValue.size > 0) {
+            for (let inputRef of refsToInputsWithWrongValue) {
+                inputRef.current.blink(3);
+            }
+        } else {
+            let requestBodyObject = {
+                fisrtName: this.inputsValues.firstName,
+                lastName: this.inputsValues.lastName,
+                password: this.inputsValues.password
+            };
+            fetch(
+                '/api/sign_up',
+                {
+                    method: 'POST',
+                    body: requestBodyObject
+                }
+            );
         }
     }
     render() {
@@ -141,7 +157,7 @@ export default class SignIn extends react.Component {
             <div id={styles.root}>
                 <div id={styles['title-wrapper']}>Verify email</div>
                 <div id={styles['main-block']}>
-                    <Input placeholder={'Verfication code'}/>
+                    <Input placeholder={'Verfication code'} />
                 </div>
             </div>
         )];
