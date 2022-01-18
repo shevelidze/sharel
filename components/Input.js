@@ -56,11 +56,10 @@ export default class Input extends react.Component {
         );
         return (
             <div
-                id={styles.root}
-                className={this.state.buttonIsHidden ? styles['hidden-button'] : ''}
+                className={this.state.buttonIsHidden ? styles['hidden-button'] : '' + ' ' + styles.root}
             >
                 <input
-                    id={styles.input}
+                    className={styles.input}
                     style={this.state.color == undefined ? null : { '--decoration-color': this.state.color, transition: 'none' }}
                     placeholder={this.props.placeholder}
                     autoComplete={this.props.autoComplete === undefined ? 'off' : this.props.autoComplete}

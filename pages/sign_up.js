@@ -7,25 +7,27 @@ import PasswordStrengthLevel from "../components/PasswordStrengthLevel";
 export default class SignIn extends react.Component {
     constructor() {
         super();
+        this.passwordStrengthLevel = null;
         this.state = {
             currentViewComponentIndex: 0,
             password: '',
             passwordStrengthLevelText: null
-        }
+        };
         this.inputsValues = {
             firstName: '',
             lastName: '',
             email: '',
             password: '',
             passwordVeriification: ''
-        }
+        };
         this.inputsRefs = {
             firstName: react.createRef(),
             lastName: react.createRef(),
             email: react.createRef(),
             password: react.createRef(),
             passwordVeriification: react.createRef(),
-        }
+        };
+        this.passwordStrengthLevelRef = react.createRef();
     }
     handleInputChange(name, event) {
         this.inputsValues[name] = event.target.value;
@@ -73,14 +75,14 @@ export default class SignIn extends react.Component {
     }
     changeComponent(component) {
     }
-    handleSubmitButtonClick() {
+    async handleSubmitButtonClick() {
         let refsToInputsWithWrongValue = new Set();
         for (let inputName in this.inputsRefs) {
             if (this.inputsValues[inputName].length == 0) {
                 refsToInputsWithWrongValue.add(this.inputsRefs[inputName]);
             }
         }
-        if (!this.handlePasswordsChange()) {
+        if (!this.handlePasswordsChange() || this.passwordStrengthLevelRef.current.level < 0.5) {
             refsToInputsWithWrongValue.add(this.inputsRefs.password);
             refsToInputsWithWrongValue.add(this.inputsRefs.passwordVeriification);
         }
@@ -91,10 +93,10 @@ export default class SignIn extends react.Component {
             }
         } else {
             let requestBodyObject = {
-                first_name: this.inputsValues.firstName,
-                last_name: this.inputsValues.lastName,
+                firstName: this.inputsValues.firstName,
+                lastName: this.inputsValues.lastName,
                 email: this.inputsValues.email,
-                password_hash: this.inputsValues.password
+                password: this.inputsValues.password,
             };
             fetch(
                 '/api/sign_up',
@@ -151,7 +153,11 @@ export default class SignIn extends react.Component {
                             ref={this.inputsRefs.passwordVeriification}
                         >
                         </Input>
-                        <PasswordStrengthLevel password={this.state.password} text={this.state.passwordStrengthLevelText}></PasswordStrengthLevel>
+                        <PasswordStrengthLevel
+                            ref={this.passwordStrengthLevelRef}
+                            password={this.state.password}
+                            text={this.state.passwordStrengthLevelText}
+                        ></PasswordStrengthLevel>
                     </div>
                     <Button text={'Sign up'} onClick={this.handleSubmitButtonClick.bind(this)}></Button>
                 </div>

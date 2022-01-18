@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^3.8.0",
+    "@prisma/client": "^3.8.1",
     "check-password-strength": "^2.0.3",
     "next": "12.0.7",
     "react": "17.0.2",

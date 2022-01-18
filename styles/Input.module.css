@@ -1,4 +1,4 @@
-#root {
+.root {
     --transition-config: ease-out 0.2s;
 
     font-weight: var(--input-button-font-weight);
@@ -8,7 +8,7 @@
     align-items: stretch;
 }
 
-#input {
+.input {
     background: none;
     min-width: 0;
     flex-grow: 1;
@@ -22,11 +22,11 @@
     transition: outline-color var(--transition-config), color var(--transition-config);
 }
 
-#input::placeholder {
+.input::placeholder {
     color: var(--decoration-color, var(--input-grey-color));
 }
 
-#input:focus {
+.input:focus {
     outline-color: white;
     color: white;
 }
