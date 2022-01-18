@@ -112,7 +112,7 @@ export default class SignIn extends react.Component {
     }
     render() {
         let pageViewComponents = [(
-            <div id={styles.root}>
+            <div id={styles.root} key='first'>
                 <div id={styles['title-wrapper']}>Sign up</div>
                 <div id={styles['main-block']}>
                     <div className={styles.section}>
@@ -164,7 +164,7 @@ export default class SignIn extends react.Component {
             </div >
         ),
         (
-            <div id={styles.root}>
+            <div id={styles.root} key='second'>
                 <div id={styles['title-wrapper']}>Verify email</div>
                 <div id={styles['main-block']}>
                     <Input placeholder={'Verfication code'} />

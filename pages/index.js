@@ -37,8 +37,8 @@ export default function Home() {
             <YoutubeLogo></YoutubeLogo>
           </div>
         </div>
-        <FooterList title='Company' elements={[<Link href='about'>About us</Link>, <Link href='feedback'>Feedback</Link>]}></FooterList>
-        <FooterList title='Information' elements={[<Link href='contact'>Support</Link>, <Link href='feedback'>Feedback</Link>]}></FooterList>
+        <FooterList title='Company' elements={[<Link href='about' key="about">About us</Link>, <Link key="feedback" href='feedback'>Feedback</Link>]}></FooterList>
+        <FooterList title='Information' elements={[<Link key='contacts' href='contact'>Support</Link>, <Link key='feedback' href='feedback'>Feedback</Link>]}></FooterList>
       </div>
     </div>
   )
