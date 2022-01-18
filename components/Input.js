@@ -1,15 +1,12 @@
 import react from "react";
 import styles from '../styles/Input.module.css'
-import Button from '../components/Button.js'
 
 export default class Input extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonIsHidden: false,
-            inputValue: null
+            inputValue: null,
         };
-        this.buttonRef = react.createRef();
     }
     async blink(times) {
         let component = this;
@@ -49,11 +46,6 @@ export default class Input extends react.Component {
         }
     }
     render() {
-        let buttonComponent = (
-            <div>
-                <Button {...this.props.buttonProps} ref={this.buttonRef} displayNoneOnDisabled={true}></Button>
-            </div>
-        );
         return (
             <div
                 className={this.state.buttonIsHidden ? styles['hidden-button'] : '' + ' ' + styles.root}
@@ -67,8 +59,15 @@ export default class Input extends react.Component {
                     {...this.props.inputParams}
                 ></input>
                 {
-                    this.props.buttonProps !== undefined ? buttonComponent : null
+                    this.props.messageText ? (
+                        <div className={styles.message}>
+                            <div className={styles['message-content']}>
+                                <div>{this.props.messageText}</div>
+                            </div>
+                        </div>
+                    ) : null
                 }
+
             </div>
         );
     }

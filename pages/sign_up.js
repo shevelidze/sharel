@@ -11,7 +11,10 @@ export default class SignIn extends react.Component {
         this.state = {
             currentViewComponentIndex: 0,
             password: '',
-            passwordStrengthLevelText: null
+            passwordStrengthLevelText: null,
+            inputsMessages: {
+                email: null
+            }
         };
         this.inputsValues = {
             firstName: '',
@@ -31,6 +34,7 @@ export default class SignIn extends react.Component {
     }
     handleInputChange(name, event) {
         this.inputsValues[name] = event.target.value;
+        this.setState({inputsMessages: {[name]: null}});
     }
     handlePasswordChange(event) {
         this.inputsValues.password = event.target.value;
@@ -98,7 +102,7 @@ export default class SignIn extends react.Component {
                 email: this.inputsValues.email,
                 password: this.inputsValues.password,
             };
-            fetch(
+            let response = await fetch(
                 '/api/sign_up',
                 {
                     headers: {
@@ -108,6 +112,17 @@ export default class SignIn extends react.Component {
                     body: JSON.stringify(requestBodyObject)
                 }
             );
+            if (response.status === 400)
+            {
+                let responseJSON = await response.json();
+                let messagesChanges = {}
+                for (let inputKey of Object.keys(responseJSON))
+                {
+                    messagesChanges[inputKey] = responseJSON[inputKey];
+                    this.inputsRefs[inputKey].current.blink(3);
+                }
+                this.setState({inputsMessages: messagesChanges});
+            }
         }
     }
     render() {
@@ -132,6 +147,7 @@ export default class SignIn extends react.Component {
                             placeholder={'Email*'}
                             ref={this.inputsRefs.email}
                             inputParams={{ onChange: this.handleInputChange.bind(this, 'email') }}
+                            messageText={this.state.inputsMessages.email}
                         />
                     </div>
                     <div className={styles.section}>
