@@ -7,7 +7,7 @@
 }
 
 #tagline {
-  font-size: 8rem;
+  font-size: 10vh;
   display: flex;
   align-items: center;
 }
@@ -22,14 +22,14 @@
 
 #buttons_wrapper {
   font-size: 0;
-  margin-top: 30px;
+  margin-top: min(10vh, 10vw);
 }
 
 #buttons_wrapper>a {
   text-decoration: none;
-  font-size: 2rem;
+  font-size: 3vh;
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: .5em 1em;
   font-weight: 600;
   --text-color: white;
   --background-color: black;
@@ -43,7 +43,7 @@
   --background-color: white;
   background-color: var(--background-color);
   color: var(--text-color);
-  margin-right: 24px;
+  margin-right: min(5vh, 5vw);
 }
 
 #buttons_wrapper>a:hover {
@@ -115,7 +115,7 @@
 
 @media screen and (max-width: 900px) {
   #tagline {
-    font-size: 10vw;
+    font-size: min(10vh, 10vw);
     display: flex;
     align-items: center;
   }

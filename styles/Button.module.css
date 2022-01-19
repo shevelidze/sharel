@@ -17,6 +17,11 @@
     transition: background-color var(--transition-config), outline var(--transition-config), opacity var(--transition-config);
 
     user-select: none;
+    pointer-events: none;
+}
+
+#root.clickable {
+    pointer-events: initial;
 }
 
 #root:hover {

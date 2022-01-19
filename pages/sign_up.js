@@ -13,15 +13,18 @@ export default class SignIn extends react.Component {
             password: '',
             passwordStrengthLevelText: null,
             inputsMessages: {
-                email: null
-            }
+                email: null,
+                verificationCode: null
+            },
+            signUpButtonIsClickable: true,
+            submitVerifyCodeButtonIsClickable: true
         };
         this.inputsValues = {
             firstName: '',
             lastName: '',
             email: '',
             password: '',
-            passwordVeriification: ''
+            passwordVeriification: '',
         };
         this.inputsRefs = {
             firstName: react.createRef(),
@@ -30,11 +33,19 @@ export default class SignIn extends react.Component {
             password: react.createRef(),
             passwordVeriification: react.createRef(),
         };
+        this.verificationCodeInputData = {
+            value: '',
+            ref: react.createRef()
+        }
         this.passwordStrengthLevelRef = react.createRef();
+    }
+    handleVerificationCodeInputChange(event) {
+        this.verificationCodeInputData.value = event.target.value;
+        this.setState({ inputsMessages: { verificationCode: null } });
     }
     handleInputChange(name, event) {
         this.inputsValues[name] = event.target.value;
-        this.setState({inputsMessages: {[name]: null}});
+        this.setState({ inputsMessages: { [name]: null } });
     }
     handlePasswordChange(event) {
         this.inputsValues.password = event.target.value;
@@ -77,9 +88,15 @@ export default class SignIn extends react.Component {
         this.inputsRefs.passwordVeriification.current.blink(3);
         this.inputsRefs.password.current.blink(3);
     }
-    changeComponent(component) {
+    changeComponent(viewComponentIndex) {
+        this.setState({
+            currentViewComponentIndex: viewComponentIndex
+        });
     }
     async handleSubmitButtonClick() {
+        this.setState({
+            signUpButtonIsClickable: false
+        });
         let refsToInputsWithWrongValue = new Set();
         for (let inputName in this.inputsRefs) {
             if (this.inputsValues[inputName].length == 0) {
@@ -112,17 +129,57 @@ export default class SignIn extends react.Component {
                     body: JSON.stringify(requestBodyObject)
                 }
             );
-            if (response.status === 400)
-            {
+            if (response.ok) {
+                this.changeComponent(1);
+            } else if (response.status === 400) {
                 let responseJSON = await response.json();
                 let messagesChanges = {}
-                for (let inputKey of Object.keys(responseJSON))
-                {
+                for (let inputKey of Object.keys(responseJSON)) {
                     messagesChanges[inputKey] = responseJSON[inputKey];
                     this.inputsRefs[inputKey].current.blink(3);
                 }
-                this.setState({inputsMessages: messagesChanges});
+                this.setState({ inputsMessages: messagesChanges });
             }
+            this.setState({
+                signUpButtonIsClickable: true
+            });
+        }
+    }
+    async handleVerifySubmitButtonClick() {
+        if (this.verificationCodeInputData.value.length === 0) {
+            this.verificationCodeInputData.ref.current.blink(3);
+        } else {
+            this.setState({
+                submitVerifyCodeButtonIsClickable: false
+            });
+            let requestBodyObject = {
+                email: this.inputsValues.email,
+                verificationCodeFromEmail: this.verificationCodeInputData.value
+            };
+            let response = await fetch(
+                '/api/verify_email',
+                {
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(requestBodyObject)
+                }
+            );
+            if (response.ok) {
+                console.log('Ok! You successfully signed up!');
+            }
+            else if (response.status === 400) {
+                this.setState({
+                    inputsMessages: {
+                        verificationCode: 'Wrong verification code. Try again or resend code.'
+                    }
+                });
+                this.verificationCodeInputData.ref.current.blink(3);
+            }
+            this.setState({
+                submitVerifyCodeButtonIsClickable: true
+            });
         }
     }
     render() {
@@ -175,15 +232,30 @@ export default class SignIn extends react.Component {
                             text={this.state.passwordStrengthLevelText}
                         ></PasswordStrengthLevel>
                     </div>
-                    <Button text={'Sign up'} onClick={this.handleSubmitButtonClick.bind(this)}></Button>
+                    <Button text={'Sign up'} onClick={this.handleSubmitButtonClick.bind(this)} isClickable={this.state.signUpButtonIsClickable}></Button>
                 </div>
             </div >
         ),
         (
-            <div id={styles.root} key='second'>
+            <div id={styles.root} key='second' className={styles['slide-in']}>
                 <div id={styles['title-wrapper']}>Verify email</div>
                 <div id={styles['main-block']}>
-                    <Input placeholder={'Verfication code'} />
+                    <div className={styles.section}>
+                        <div className={styles.text}>Code was sent to your email (<b>{this.inputsValues.email}</b>).</div>
+                        <Input
+                            ref={this.verificationCodeInputData.ref}
+                            messageText={this.state.inputsMessages.verificationCode}
+                            placeholder={'Verification code'}
+                            inputParams={{
+                                onInput: this.handleVerificationCodeInputChange.bind(this),
+                            }}
+                        />
+                    </div>
+                    <Button
+                        text={'Submit'}
+                        onClick={this.handleVerifySubmitButtonClick.bind(this)}
+                        isClickable={this.state.submitVerifyCodeButtonIsClickable}
+                    ></Button>
                 </div>
             </div>
         )];
