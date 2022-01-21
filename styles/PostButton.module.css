@@ -1,0 +1,21 @@
+.root:active {
+    transform: translatey(3px);
+    transition: initial !important;
+}
+
+.root {
+    --ease-out-back: cubic-bezier(.6, 15 , .6, -5);
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.root.activated {
+    transition: transform var(--ease-out-back) 0.5s;
+}
+.root * {
+    transition: stroke 0.2s ease-in-out 0.2s;
+}
+.root.activated * {
+    stroke: white;
+}

@@ -1,0 +1,126 @@
+#main_content {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10%;
+  height: 100vh;
+  align-items: center;
+}
+
+#tagline {
+  font-size: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+#main_content>*:first-child {
+  flex-shrink: 0;
+}
+
+#main_content>*:last-child {
+  margin-left: 200px !important;
+}
+
+#buttons_wrapper {
+  font-size: 0;
+  margin-top: min(10vh, 10vw);
+}
+
+#buttons_wrapper>a {
+  text-decoration: none;
+  font-size: 3vh;
+  display: inline-block;
+  padding: .5em 1em;
+  font-weight: 600;
+  --text-color: white;
+  --background-color: black;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color ease-out 0.2s, color ease-out 0.2s;
+}
+
+#buttons_wrapper>a:first-child {
+  --text-color: black;
+  --background-color: white;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin-right: min(5vh, 5vw);
+}
+
+#buttons_wrapper>a:hover {
+  color: var(--background-color);
+  background-color: var(--text-color);
+}
+
+#buttons_wrapper>a {
+  --outline-width: 1px;
+  outline: var(--outline-width) solid white;
+  outline-offset: calc(var(--outline-width) * -1);
+}
+
+.textbox:nth-child(1) {
+  --translate-len: -5px;
+}
+
+.textbox:nth-child(2) {
+  --translate-len: -10px;
+  align-self: flex-end;
+}
+
+.textbox:nth-child(3) {
+  --translate-len: -5px;
+}
+
+.textbox {
+  animation: float 3s ease-in-out infinite;
+  width: 500px;
+}
+
+#footer {
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 10%;
+  font-size: 14px;
+}
+
+#footer>* {
+  margin: 26px 13px;
+}
+
+#footer *, #footer {
+  color: black;
+}
+
+#footer * ul {
+  list-style-type: none;
+}
+
+#footer h3 {
+  font-size: 18px;
+}
+
+#footer_logo {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+#social * {
+  fill: black;
+}
+
+#social>*:not(:last-child) {
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  #tagline {
+    font-size: min(10vh, 10vw);
+    display: flex;
+    align-items: center;
+  }
+
+  #main_content>*:last-child {
+    display: none !important;
+  }
+}

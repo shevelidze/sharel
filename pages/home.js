@@ -1,8 +1,23 @@
 import react from 'react'
-export default class Home extends react.Component
-{
-    render()
-    {
-        return <div>Home page</div>
+import LikePostButton from '../components/postButtons.js/Like'
+import styles from '../styles/Home.module.css'
+
+export default class Home extends react.Component {
+    render() {
+        return (
+            <div className={styles.root}>
+                <LikePostButton onClick={
+                    (a, b, c) => {
+                        console.log(a);
+                        console.log(c);
+                        if (!a) {
+                            b();
+                        } else {
+                            c();
+                        }
+                    }
+                }></LikePostButton>
+            </div >
+        )
     }
 }
