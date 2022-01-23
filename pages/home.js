@@ -1,4 +1,5 @@
 import react from 'react'
+import CommentPostButton from '../components/postButtons.js/Comment';
 import LikePostButton from '../components/postButtons.js/Like'
 import styles from '../styles/Home.module.css'
 
@@ -17,6 +18,7 @@ export default class Home extends react.Component {
                         }
                     }
                 }></LikePostButton>
+                <CommentPostButton/>
             </div >
         )
     }

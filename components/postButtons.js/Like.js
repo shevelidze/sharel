@@ -15,14 +15,14 @@ export default class LikePostButton extends PostButton {
     constructor(props) {
         super(props);
         this.content = [
-            <LikeSVG></LikeSVG>
+            <LikeSVG key='main'></LikeSVG>
         ];
         this.staticContent = [];
         this.ghostsRefs = [];
         this.runAnimation = true;
         for (let i = 0; i < 15; i++) {
             this.ghostsRefs.push(react.createRef());
-            this.staticContent.push(<LikeGhost ref={this.ghostsRefs[i]}></LikeGhost>);
+            this.staticContent.push(<LikeGhost ref={this.ghostsRefs[i]} key={`ghost ${i}`}></LikeGhost>);
         }
     }
     async onClick() {
