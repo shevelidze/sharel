@@ -112,6 +112,9 @@ export default class SignIn extends react.Component {
             for (let inputRef of refsToInputsWithWrongValue) {
                 inputRef.current.blink(3);
             }
+            this.setState({
+                signUpButtonIsClickable: true
+            });
         } else {
             let requestBodyObject = {
                 firstName: this.inputsValues.firstName,
@@ -170,9 +173,10 @@ export default class SignIn extends react.Component {
                 console.log('Ok! You successfully signed up!');
             }
             else if (response.status === 400) {
+                let responseJSON = await response.json();
                 this.setState({
                     inputsMessages: {
-                        verificationCode: 'Wrong verification code. Try again or resend code.'
+                        verificationCode: responseJSON.message
                     }
                 });
                 this.verificationCodeInputData.ref.current.blink(3);
