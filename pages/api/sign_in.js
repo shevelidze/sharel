@@ -3,17 +3,6 @@ import validate from '../../lib/validator'
 import crypto from 'crypto'
 
 export default validate(
-    'POST',
-    {
-        properties: {
-            password: {
-                type: 'string'
-            },
-            email: {
-                type: 'string'
-            }
-        }
-    },
     async (request, response) => {
         let passwordHash = crypto.createHash('sha256').update(request.body.password).digest('base64');
         let userData = await prisma.users.findFirst({
@@ -24,4 +13,16 @@ export default validate(
         });
         console.log(userData);
         response.json(userData);
-    });
+    },
+    'POST',
+    {
+        properties: {
+            password: {
+                type: 'string'
+            },
+            email: {
+                type: 'string'
+            }
+        }
+    }
+);
