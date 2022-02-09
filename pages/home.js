@@ -22,4 +22,5 @@ export default class Home extends react.Component {
             </div >
         )
     }
+
 }

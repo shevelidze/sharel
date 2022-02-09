@@ -97,13 +97,11 @@ export default class Loader extends react.Component {
     }
     startAnimation() {
         this.createAdjectiveChangeAnimation(300, 500, 1000, 3)();
-        let component = this;
-        setTimeout(
-            () => {
-                component.setState({ animationWillEnd: true });
-            },
-            2000
-        )
+    }
+    stopAnimation() {
+        this.setState({
+            animationWillEnd: true
+        });
     }
     componentDidMount() {
         this.startAnimation();
