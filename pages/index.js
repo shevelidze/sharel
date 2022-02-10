@@ -8,23 +8,23 @@ import TwitterLogo from '../components/social-icons/TwitterLogo';
 import YoutubeLogo from '../components/social-icons/YoutubeLogo';
 import Loader from '../components/Loader'
 import react from 'react';
+import SignIn from '../components/signIn'
+import SignUp from '../components/signUp'
 
 
 export default class Home extends react.Component {
   constructor(props) {
     super(props);
-    this.loaderRef = react.createRef();
-  }
-  render() {
-    return (
+
+    this.landingElement = (
       <div id={styles.root}>
         <div id={styles.main_content}>
           <div>
             <div id={styles.line}>
               <div id={styles.logo}>sharel</div>
               <div id={styles.buttons_wrapper}>
-                <Link href="/sign_up">Sign up</Link>
-                <Link href="/sign_in">Sign in</Link>
+                <div onClick={() => { this.setState({ renderElement: this.signUpElement }) }}>Sign up</div>
+                <div onClick={() => { this.setState({ renderElement: this.signInElement }) }}>Sign in</div>
               </div>
             </div>
             <div id={styles.image_wrapper}>
@@ -45,11 +45,31 @@ export default class Home extends react.Component {
           <FooterList title='Company' elements={[<Link href='about' key="about">About us</Link>, <Link key="feedback" href='feedback'>Feedback</Link>]}></FooterList>
           <FooterList title='Information' elements={[<Link key='contacts' href='contact'>Support</Link>, <Link key='feedback' href='feedback'>Feedback</Link>]}></FooterList>
         </div>
+
+      </div>
+    );
+    this.goToLanding = () => { this.setState({ renderElement: this.landingElement }) };
+
+    this.signInElement = <SignIn onBackClick={this.goToLanding}></SignIn>
+    this.signUpElement = <SignUp onBackClick={this.goToLanding}></SignUp>
+
+
+    this.loaderRef = react.createRef();
+
+    this.state = { renderElement: this.landingElement };
+  }
+  render() {
+    return (
+      <div>
+        {this.state.renderElement}
         <Loader ref={this.loaderRef}></Loader>
       </div>
     )
   }
   componentDidMount() {
+    if (localStorage.getItem('accessToken') !== null) {
+      this.setState({ renderElement: 'Home element' });
+    }
     this.loaderRef.current.stopAnimation();
   }
 }

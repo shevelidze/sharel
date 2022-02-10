@@ -31,7 +31,7 @@
   font-size: 0;
 }
 
-#buttons_wrapper>a {
+#buttons_wrapper>div {
   text-decoration: none;
   font-size: 2rem;
   display: inline-block;
@@ -42,9 +42,10 @@
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color ease-out 0.2s, color ease-out 0.2s;
+  cursor: pointer;
 }
 
-#buttons_wrapper>a:first-child {
+#buttons_wrapper>div:first-child {
   --text-color: black;
   --background-color: white;
   background-color: var(--background-color);
@@ -52,12 +53,12 @@
   margin-right: min(5vh, 5vw);
 }
 
-#buttons_wrapper>a:hover {
+#buttons_wrapper>div:hover {
   color: var(--background-color);
   background-color: var(--text-color);
 }
 
-#buttons_wrapper>a {
+#buttons_wrapper>div {
   --outline-width: 1px;
   outline: var(--outline-width) solid white;
   outline-offset: calc(var(--outline-width) * -1);

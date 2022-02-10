@@ -5,13 +5,18 @@ import react from "react"
 import PasswordStrengthLevel from "../components/PasswordStrengthLevel";
 
 export default class SignIn extends react.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
     render() {
         let pageViewComponents = [(
             <div id={styles.root} key='first'>
-                <div id={styles['title-wrapper']}>Sign up</div>
+                <div id={styles['title-wrapper']}>
+                    <div>
+                        <svg onClick={this.props.onBackClick} width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" fill="white" clipRule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z" /></svg>
+                        <div>Sign up</div>
+                    </div>
+                </div>
                 <div id={styles['main-block']}>
                     <div className={styles.section}>
                         <Input
@@ -35,8 +40,7 @@ export default class SignIn extends react.Component {
                             placeholder={'Verify password*'}
                         >
                         </Input>
-                        <PasswordStrengthLevel
-                        ></PasswordStrengthLevel>
+                        <PasswordStrengthLevel password='hello'></PasswordStrengthLevel>
                     </div>
                     <Button text={'Sign up'} ></Button>
                 </div>
