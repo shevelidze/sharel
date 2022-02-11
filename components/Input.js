@@ -3,10 +3,23 @@ import styles from '../styles/Input.module.css'
 
 export default class Input extends react.Component {
     constructor(props) {
+        /*
+        used props: 
+        - placeholder
+        - type ("text" by default)
+        - autoComplete ("off" by default)
+        - messageText
+        - onChange : function (event)
+        */
         super(props);
         this.state = {
             inputValue: null,
         };
+        this.value = '';
+    }
+    onChange(event) {
+        this.value = event.target.value;
+        this.props?.onChange(event);
     }
     async blink(times) {
         let component = this;
@@ -47,16 +60,14 @@ export default class Input extends react.Component {
     }
     render() {
         return (
-            <div
-                className={this.state.buttonIsHidden ? styles['hidden-button'] : '' + ' ' + styles.root}
-            >
+            <div className={styles.root}>
                 <input
                     className={styles.input}
                     style={this.state.color == undefined ? null : { '--decoration-color': this.state.color, transition: 'none' }}
                     placeholder={this.props.placeholder}
-                    autoComplete={this.props.autoComplete === undefined ? 'off' : this.props.autoComplete}
                     type={this.props.type === undefined ? 'text' : this.props.type}
-                    {...this.props.inputParams}
+                    autoComplete={this.props.autoComplete === undefined ? 'off' : this.props.type}
+                    onChange={this.onChange.bind(this)}
                 ></input>
                 {
                     this.props.messageText ? (

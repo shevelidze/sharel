@@ -2,11 +2,25 @@ import Input from '../components/Input'
 import styles from '../styles/Auth.module.css'
 import Button from '../components/Button'
 import react from "react"
-import PasswordStrengthLevel from "../components/PasswordStrengthLevel";
+import { PasswordStrengthLevel, getPropsForLevel } from "../components/PasswordStrengthLevel";
 
-export default class SignIn extends react.Component {
+export default class SignUp extends react.Component {
     constructor(props) {
         super(props);
+        this.inputsValues = {};
+        this.state = {
+            passwordLevelProps: {}
+        };
+    }
+    getInputChangeHandler(inputName) {
+        return (event) => {
+            this.inputsValues[inputName] = event.target.value;
+            if (inputName.slice(0, -1) === 'password') {
+                this.setState({
+                    passwordLevelProps: getPropsForLevel(this.inputsValues.password1, this.inputsValues.password2)
+                });
+            }
+        };
     }
     render() {
         let pageViewComponents = [(
@@ -19,30 +33,18 @@ export default class SignIn extends react.Component {
                 </div>
                 <div id={styles['main-block']}>
                     <div className={styles.section}>
-                        <Input
-                            placeholder={'First name*'}
-                        />
-                        <Input
-                            placeholder={'Last name*'}
-                        />
+                        <Input placeholder={'First name*'} onChange={this.getInputChangeHandler('firstName')} />
+                        <Input placeholder={'Last name*'} onChange={this.getInputChangeHandler('lastName')} />
                     </div>
                     <div className={styles.section}>
-                        <Input
-                            placeholder={'Email*'}
-                        />
+                        <Input placeholder={'Email*'} onChange={this.getInputChangeHandler('email')} />
                     </div>
                     <div className={styles.section}>
-                        <Input
-                            placeholder={'Password*'}
-                        >
-                        </Input>
-                        <Input
-                            placeholder={'Verify password*'}
-                        >
-                        </Input>
-                        <PasswordStrengthLevel password='hello'></PasswordStrengthLevel>
+                        <Input placeholder={'Password*'} onChange={this.getInputChangeHandler('password1')} />
+                        <Input placeholder={'Verify password*'} onChange={this.getInputChangeHandler('password2')} />
+                        <PasswordStrengthLevel {...this.state.passwordLevelProps} />
                     </div>
-                    <Button text={'Sign up'} ></Button>
+                    <Button text={'Sign up'} />
                 </div>
             </div >
         ),
