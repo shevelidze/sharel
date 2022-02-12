@@ -7,24 +7,63 @@ import { PasswordStrengthLevel, getPropsForLevel } from "../components/PasswordS
 export default class SignUp extends react.Component {
     constructor(props) {
         super(props);
-        this.inputsValues = {};
         this.state = {
-            passwordLevelProps: {}
+            passwordLevelProps: {},
+            userDataSubmitIsClickable: true,
+            verificationCodeSubmitIsClickable: true
+        };
+
+        this.passwordInputsValues = {};
+        this.inputs = {};
+
+        this.onUserDataSubmitClick = () => {
+            this.setState({
+                userDataSubmitIsClickable: false
+            });
+
+            let invalidValueInputs = new Set();
+            for (let element of Object.values(this.inputs)) {
+                if (!(element.value.length > 0)) {
+                    invalidValueInputs.add(element);
+                }
+            }
+
+            if (!this.state.passwordLevelProps.passwordsAreRight) {
+                invalidValueInputs.add(this.inputs.password1);
+                invalidValueInputs.add(this.inputs.password2);
+            }
+
+            for (let invalidValueInput of invalidValueInputs) {
+                invalidValueInput.blink(2);
+            }
+
+            this.setState({
+                userDataSubmitIsClickable: true
+            });
+        };
+
+        this.onVerificationCodeSubmitClick = event => {
         };
     }
-    getInputChangeHandler(inputName) {
+    addInput(inputName) {
+        return (element) => {
+            this.inputs[inputName] = element;
+        }
+    }
+    getPasswordChangeHandler(inputName) {
         return (event) => {
-            this.inputsValues[inputName] = event.target.value;
-            if (inputName.slice(0, -1) === 'password') {
-                this.setState({
-                    passwordLevelProps: getPropsForLevel(this.inputsValues.password1, this.inputsValues.password2)
-                });
-            }
+            this.passwordInputsValues[inputName] = event.target.value;
+            this.setState({
+                passwordLevelProps: getPropsForLevel(
+                    this.passwordInputsValues.password1,
+                    this.passwordInputsValues.password2
+                )
+            });
         };
     }
     render() {
         let pageViewComponents = [(
-            <div id={styles.root} key='first'>
+            <div id={styles.root} key='0'>
                 <div id={styles['title-wrapper']}>
                     <div>
                         <svg onClick={this.props.onBackClick} width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" fill="white" clipRule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z" /></svg>
@@ -33,23 +72,23 @@ export default class SignUp extends react.Component {
                 </div>
                 <div id={styles['main-block']}>
                     <div className={styles.section}>
-                        <Input placeholder={'First name*'} onChange={this.getInputChangeHandler('firstName')} />
-                        <Input placeholder={'Last name*'} onChange={this.getInputChangeHandler('lastName')} />
+                        <Input placeholder={'First name*'} ref={this.addInput('firstName')} />
+                        <Input placeholder={'Last name*'} ref={this.addInput('lastName')} />
                     </div>
                     <div className={styles.section}>
-                        <Input placeholder={'Email*'} onChange={this.getInputChangeHandler('email')} />
+                        <Input placeholder={'Email*'} ref={this.addInput('email')} />
                     </div>
                     <div className={styles.section}>
-                        <Input placeholder={'Password*'} onChange={this.getInputChangeHandler('password1')} />
-                        <Input placeholder={'Verify password*'} onChange={this.getInputChangeHandler('password2')} />
+                        <Input placeholder={'Password*'} onChange={this.getPasswordChangeHandler('password1')} ref={this.addInput('password1')} />
+                        <Input placeholder={'Verify password*'} onChange={this.getPasswordChangeHandler('password2')} ref={this.addInput('password2')} />
                         <PasswordStrengthLevel {...this.state.passwordLevelProps} />
                     </div>
-                    <Button text={'Sign up'} />
+                    <Button text={'Sign up'} onClick={this.onUserDataSubmitClick} isClickable={this.state.userDataSubmitIsClickable} />
                 </div>
             </div >
         ),
         (
-            <div id={styles.root} key='second' className={styles['slide-in']}>
+            <div id={styles.root} key='1' className={styles['slide-in']}>
                 <div id={styles['title-wrapper']}>Verify email</div>
                 <div id={styles['main-block']}>
                     <div className={styles.section}>
@@ -60,7 +99,9 @@ export default class SignUp extends react.Component {
                     </div>
                     <Button
                         text={'Submit'}
-                    ></Button>
+                        onClick={this.onVerificationCodeSubmitClick}
+                        isClickable={this.state.verificationCodeSubmitIsClickable}
+                    />
                 </div>
             </div>
         )];

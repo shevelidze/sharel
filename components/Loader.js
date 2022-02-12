@@ -96,7 +96,13 @@ export default class Loader extends react.Component {
         }
     }
     startAnimation() {
-        this.createAdjectiveChangeAnimation(300, 500, 1000, 3)();
+        if (process.env.NODE_ENV !== 'production') {
+            this.createAdjectiveChangeAnimation(0, 0, 0, 0)();
+        }
+        else {
+            this.createAdjectiveChangeAnimation(300, 500, 1000, 3)();
+        }
+
     }
     stopAnimation() {
         this.setState({

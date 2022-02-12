@@ -19,7 +19,7 @@ export default class Input extends react.Component {
     }
     onChange(event) {
         this.value = event.target.value;
-        this.props?.onChange(event);
+        this.props.onChange?.(event);
     }
     async blink(times) {
         let component = this;

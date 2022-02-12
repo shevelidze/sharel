@@ -3,6 +3,12 @@ import react from 'react';
 
 export default class Button extends react.Component {
     constructor(props) {
+        /*
+        used props:
+        - isClickable
+        - isDisabled
+        - text
+        */
         super(props);
         this.state = {
             styles: {
