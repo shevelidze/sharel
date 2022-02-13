@@ -4,15 +4,6 @@ import { addUser } from '../../lib/newUnverifiedUsers';
 import validateData from '../../lib/requestDataValidator';
 
 export default validateData(
-  {
-    properties: {
-      firstName: { type: 'string' },
-      lastName: { type: 'string' },
-      email: { type: 'string' },
-      password: { type: 'string' },
-    }
-  },
-  'POST',
   async function handler(req, res) {
     console.log(req.body);
     let usersWithRequestedEmail = await prisma.users.findFirst({
@@ -38,5 +29,13 @@ export default validateData(
       });
       res.end();
     };
-  }
+  },
+  {
+    properties: {
+      firstName: { type: 'string' },
+      lastName: { type: 'string' },
+      email: { type: 'string' },
+      password: { type: 'string' },
+    }
+  },
 )
