@@ -84,7 +84,11 @@ export default class SignUp extends react.Component {
                 },
                 false
             )
-            console.log(response);
+            if (response.ok) {
+                this.props.goToSignIn();
+            } else {
+                this.inputs.verificationCode.blink(2);
+            }
             this.setState({
                 verificationCodeSubmitIsClickable: true
             });

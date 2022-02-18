@@ -50,9 +50,10 @@ export default class Home extends react.Component {
     );
     this.goToLanding = () => { this.setState({ renderElement: this.landingElement }) };
 
-    this.signInElement = <SignIn onBackClick={this.goToLanding}></SignIn>
-    this.signUpElement = <SignUp onBackClick={this.goToLanding}></SignUp>
-
+    this.signInElement = <SignIn onBackClick={this.goToLanding} />
+    this.goToSignIn = () => { this.setState({ renderElement: this.signInElement }) };
+    this.signUpElement = <SignUp onBackClick={this.goToLanding} goToSignIn={this.goToSignIn} />
+    this.goToSignUp = () => { this.setState({ renderElement: this.signUpElement }) };
 
     this.loaderRef = react.createRef();
 

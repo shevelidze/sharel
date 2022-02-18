@@ -15,8 +15,7 @@ export default validateData(
       }
     });
     if (usersWithRequestedEmail !== null) {
-      res.status(400);
-      res.json({
+      res.status(400).json({
         message: 'User with this email already exists.',
         errors: ['emailHasTaken']
       });
