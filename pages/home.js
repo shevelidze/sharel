@@ -1,12 +1,11 @@
 import react from 'react'
 import CommentPostButton from '../components/postButtons.js/Comment';
 import LikePostButton from '../components/postButtons.js/Like'
-import styles from '../styles/Home.module.css'
 
 export default class Home extends react.Component {
     render() {
         return (
-            <div className={styles.root}>
+            <div>
                 <LikePostButton onClick={
                     (a, b, c) => {
                         console.log(a);
