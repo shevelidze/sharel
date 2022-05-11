@@ -2,10 +2,10 @@ import Image from 'next/image'
 import styles from '../styles/Landing.module.css'
 import Link from 'next/link';
 import FooterList from '../components/FooterList';
-import FacebookLogo from '../components/social-icons/FacebookLogo';
-import InstagramLogo from '../components/social-icons/InstagramLogo';
-import TwitterLogo from '../components/social-icons/TwitterLogo';
-import YoutubeLogo from '../components/social-icons/YoutubeLogo';
+import FacebookLogo from '../components/socialIcons/FacebookLogo';
+import InstagramLogo from '../components/socialIcons/InstagramLogo';
+import TwitterLogo from '../components/socialIcons/TwitterLogo';
+import YoutubeLogo from '../components/socialIcons/YoutubeLogo';
 import Loader from '../components/Loader'
 import react from 'react';
 import SignIn from '../components/signIn'
