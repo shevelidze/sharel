@@ -19,15 +19,13 @@
 
 #title-wrapper>div {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 #title-wrapper>div>svg {
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-right: 1rem;
     cursor: pointer;
+    padding-right: 1rem;
 }
 
 #title-wrapper #main-block>.stretch {
@@ -68,5 +66,20 @@
 @media screen and (max-width: 900px) {
     .text {
         max-width: 40rem;
+    }
+
+    #root {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    #title-wrapper>div>svg {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        padding-right: 1rem;
+
     }
 }
