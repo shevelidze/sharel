@@ -35,17 +35,17 @@ model subscriptions {
 }
 
 model users {
-  id                                                    Int               @id @default(autoincrement())
+  id                                                    Int             @id @default(autoincrement())
   first_name                                            String
   last_name                                             String
-  email                                                 String            @unique
-  password_hash                                         String            @db.VarChar(64)
-  registration_timestamp                                DateTime?         @default(now()) @db.Timestamptz(6)
+  email                                                 String          @unique
+  password_hash                                         String          @db.VarChar(64)
+  registration_timestamp                                DateTime?       @default(now()) @db.Timestamptz(6)
   likes                                                 likes[]
   posts                                                 posts[]
-  refreshsessions                                       refreshsessions[]
-  subscriptions_subscriptions_subscriber_user_idTousers subscriptions[]   @relation("subscriptions_subscriber_user_idTousers")
-  subscriptions_subscriptions_user_idTousers            subscriptions[]   @relation("subscriptions_user_idTousers")
+  sessions                                              sessions[]
+  subscriptions_subscriptions_subscriber_user_idTousers subscriptions[] @relation("subscriptions_subscriber_user_idTousers")
+  subscriptions_subscriptions_user_idTousers            subscriptions[] @relation("subscriptions_user_idTousers")
   views                                                 views[]
 }
 
@@ -57,9 +57,9 @@ model views {
   users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model refreshsessions {
+model sessions {
   user_id                    Int?
-  refresh_token_hash         String    @id
+  access_token_hash          String    @id
   user_agent                 String
   ip_address                 String
   authentification_timestamp DateTime? @default(now()) @db.Timestamptz(6)

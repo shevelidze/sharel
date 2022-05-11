@@ -16,14 +16,27 @@ export default validateData(
             },
         });
         if (userData) {
+            const token = jwt.sign(
+                {
+                    userId: userData.id,
+                },
+                process.env.JWT_SECRET,
+                { expiresIn: '30d' }
+            );
+            const tokenHash = crypto
+                .createHash('sha256')
+                .update(token)
+                .digest('base64');
+            await prisma.sessions.create({
+                data: {
+                    user_id: userData.id,
+                    access_token_hash: tokenHash,
+                    user_agent: request.headers['user-agent'],
+                    ip_address: request.headers.host,
+                },
+            });
             response.json({
-                JWTAccessToken: jwt.sign(
-                    {
-                        userId: userData.id,
-                    },
-                    process.env.JWT_SECRET,
-                    { expiresIn: '30d' }
-                ),
+                JWTAccessToken: token,
             });
         } else {
             response.status(400).json({
