@@ -2,6 +2,7 @@ import prisma from '../../lib/prisma';
 import validateData from '../../lib/requestDataValidator';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import requestIp from 'request-ip';
 
 export default validateData(
     async (request, response) => {
@@ -32,7 +33,7 @@ export default validateData(
                     user_id: userData.id,
                     access_token_hash: tokenHash,
                     user_agent: request.headers['user-agent'],
-                    ip_address: request.headers.host,
+                    ip_address: requestIp.getClientIp(request),
                 },
             });
             response.json({
