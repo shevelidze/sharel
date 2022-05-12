@@ -1,11 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Input from '../components/Input';
 import styles from '../styles/Auth.module.css';
 import Button from '../components/Button';
 import { apiFetch } from '../lib/apiFetch';
-import { useRouter } from 'next/router';
 
-async function signIn(emailInputRef, passwordInputRef, router) {
+async function signIn(emailInputRef, passwordInputRef, setMessageText) {
     let response = await apiFetch(
         '/sign_in',
         {
@@ -14,19 +13,24 @@ async function signIn(emailInputRef, passwordInputRef, router) {
         },
         false
     );
+    const responseBodyObject = await response.json();
     if (response.ok) {
         localStorage.setItem(
             'JWTAccessToken',
-            (await response.json()).JWTAccessToken
+            responseBodyObject.JWTAccessToken
         );
-        router.push('/home');
+        location.assign('/home');
+    } else {
+        setMessageText(responseBodyObject.message);
+        emailInputRef.current.blink(2);
+        passwordInputRef.current.blink(2);
     }
 }
 
 export default function SignIn(props) {
-    const router = useRouter();
-    let emailInputRef = useRef();
-    let passwordInputRef = useRef();
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
+    const [emailMessageText, setEmailMessageText] = useState('');
     return (
         <div id={styles.root}>
             <div id={styles['title-wrapper']}>
@@ -47,7 +51,11 @@ export default function SignIn(props) {
             </div>
             <div id={styles['main-block']}>
                 <div className={styles['section']}>
-                    <Input placeholder="Email" ref={emailInputRef}></Input>
+                    <Input
+                        placeholder="Email"
+                        ref={emailInputRef}
+                        messageText={emailMessageText}
+                    />
                     <Input
                         placeholder="Password"
                         type="password"
@@ -60,7 +68,7 @@ export default function SignIn(props) {
                         null,
                         emailInputRef,
                         passwordInputRef,
-                        router
+                        setEmailMessageText
                     )}
                 />
             </div>
