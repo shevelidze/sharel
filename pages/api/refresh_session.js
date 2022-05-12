@@ -31,5 +31,6 @@ export default validateJWTToken(
         response.json({
             JWTAccessToken: refreshedToken,
         });
-    }
+    },
+    true
 );

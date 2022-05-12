@@ -23,10 +23,6 @@ async function signIn(emailInputRef, passwordInputRef, router) {
     }
 }
 
-async function checkRefresh() {
-    let response = await apiFetch('/refresh_session', null, true);
-}
-
 export default function SignIn(props) {
     const router = useRouter();
     let emailInputRef = useRef();
@@ -66,8 +62,7 @@ export default function SignIn(props) {
                         passwordInputRef,
                         router
                     )}
-                ></Button>
-                <Button text="Check refresh" onClick={checkRefresh} />
+                />
             </div>
         </div>
     );

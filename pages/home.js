@@ -1,25 +1,17 @@
-import react from 'react'
-import CommentPostButton from '../components/postButtons/Comment';
-import LikePostButton from '../components/postButtons/Like';
+import react from 'react';
+import Button from '../components/Button';
+import { apiFetch } from '../lib/apiFetch';
+import { useRouter } from 'next/router';
 
-export default class Home extends react.Component {
-    render() {
-        return (
-            <div>
-                <LikePostButton onClick={
-                    (a, b, c) => {
-                        console.log(a);
-                        console.log(c);
-                        if (!a) {
-                            b();
-                        } else {
-                            c();
-                        }
-                    }
-                }></LikePostButton>
-                <CommentPostButton/>
-            </div >
-        )
-    }
+function testFetch(router) {
+    apiFetch('/test_token', {}, true, router);
+}
 
+export default function Home(props) {
+    const router = useRouter();
+    return (
+        <div>
+            <Button onClick={testFetch.bind(null, router)} text="Test fetch!" />
+        </div>
+    );
 }
