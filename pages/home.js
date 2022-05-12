@@ -1,6 +1,6 @@
 import react from 'react'
-import CommentPostButton from '../components/postButtons.js/Comment';
-import LikePostButton from '../components/postButtons.js/Like'
+import CommentPostButton from '../components/postButtons/Comment';
+import LikePostButton from '../components/postButtons/Like';
 
 export default class Home extends react.Component {
     render() {

@@ -3,8 +3,9 @@ import Input from '../components/Input';
 import styles from '../styles/Auth.module.css';
 import Button from '../components/Button';
 import { apiFetch } from '../lib/apiFetch';
+import { useRouter } from 'next/router';
 
-async function signIn(emailInputRef, passwordInputRef) {
+async function signIn(emailInputRef, passwordInputRef, router) {
     let response = await apiFetch(
         '/sign_in',
         {
@@ -13,7 +14,13 @@ async function signIn(emailInputRef, passwordInputRef) {
         },
         false
     );
-    console.log(response);
+    if (response.ok) {
+        localStorage.setItem(
+            'JWTAccessToken',
+            (await response.json()).JWTAccessToken
+        );
+        router.push('/home');
+    }
 }
 
 async function checkRefresh() {
@@ -21,6 +28,7 @@ async function checkRefresh() {
 }
 
 export default function SignIn(props) {
+    const router = useRouter();
     let emailInputRef = useRef();
     let passwordInputRef = useRef();
     return (
@@ -52,7 +60,12 @@ export default function SignIn(props) {
                 </div>
                 <Button
                     text="Sign in"
-                    onClick={signIn.bind(null, emailInputRef, passwordInputRef)}
+                    onClick={signIn.bind(
+                        null,
+                        emailInputRef,
+                        passwordInputRef,
+                        router
+                    )}
                 ></Button>
                 <Button text="Check refresh" onClick={checkRefresh} />
             </div>
