@@ -1,8 +1,8 @@
 import prisma from '../../lib/prisma';
 import validateData from '../../lib/requestDataValidator';
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 import requestIp from 'request-ip';
+import { createJWTToken } from '../../lib/requestJWTValidator';
 
 export default validateData(
     async (request, response) => {
@@ -17,13 +17,7 @@ export default validateData(
             },
         });
         if (userData) {
-            const token = jwt.sign(
-                {
-                    userId: userData.id,
-                },
-                process.env.JWT_SECRET,
-                { expiresIn: '30d' }
-            );
+            const token = createJWTToken(userData.id);
             const tokenHash = crypto
                 .createHash('sha256')
                 .update(token)

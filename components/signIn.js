@@ -16,6 +16,10 @@ async function signIn(emailInputRef, passwordInputRef) {
     console.log(response);
 }
 
+async function checkRefresh() {
+    let response = await apiFetch('/refresh_session', null, true);
+}
+
 export default function SignIn(props) {
     let emailInputRef = useRef();
     let passwordInputRef = useRef();
@@ -50,6 +54,7 @@ export default function SignIn(props) {
                     text="Sign in"
                     onClick={signIn.bind(null, emailInputRef, passwordInputRef)}
                 ></Button>
+                <Button text="Check refresh" onClick={checkRefresh} />
             </div>
         </div>
     );
