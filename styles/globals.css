@@ -41,3 +41,11 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+h1, h2, h3, h4 {
+    margin-bottom: 1em;
+}
+
+h4 {
+    font-weight: 600;
+}
