@@ -73,11 +73,18 @@ function Method(props) {
                 }
                 if (methodPath[0] !== '/') methodPath = '/' + methodPath;
                 return (
-                    <div className={styles.method}>
+                    <div className={styles.method} id={methodPath}>
                         <div className={styles.header}>
                             <h3>{props.name}</h3>
                             <CodeInline>{methodPath}</CodeInline>
-                            <CodeInline>{props.httpMethod}</CodeInline>
+                            <CodeInline>
+                                {props.httpMethod || 'POST'}
+                            </CodeInline>
+                            {!props.authorizationIsNotRequired && (
+                                <span style={{ fontStyle: 'italic' }}>
+                                    Authorization required
+                                </span>
+                            )}
                         </div>
                         {props.children && [
                             <h4>Description</h4>,
@@ -122,8 +129,40 @@ export default function ApiDocs(props) {
         );
     }
 
-    addSection('Signing up', null, [
-        <Method httpMethod="POST" name="sign_up" />,
+    addSection('Signing up and signing in', null, [
+        <Method
+            httpMethod="POST"
+            name="sign_up"
+            requestDataExample={{
+                firstName: 'David',
+                lastName: 'Johnson',
+                email: 'djohnson@gmail.com',
+                password: 'qwerty123',
+            }}
+            authorizationIsNotRequired={true}
+        />,
+        <Method
+            httpMethod="POST"
+            name="verify_email"
+            requestDataExample={{
+                email: 'djohnson@gmail.com',
+                verificationCodeFromEmail: '12212',
+            }}
+            authorizationIsNotRequired={true}
+        >
+            After sending registration data useing method{' '}
+            <a href="#/sign_up">sign_up</a>, users should comnfirm their emails
+            with code, that will be sended to their emails.
+        </Method>,
+        <Method
+            httpMethod="POST"
+            name="sign_in"
+            requestDataExample={{
+                email: 'djohnson@gmail.com',
+                password: 'qwerty123',
+            }}
+            authorizationIsNotRequired={true}
+        />,
     ]);
 
     addSection('Profile', '/profile/', [
@@ -134,15 +173,17 @@ export default function ApiDocs(props) {
         ></Method>,
         <Method
             httpMethod="POST"
-            name="get_session"
+            name="get_sessions"
             responseDataExample={{
                 sesions: [
                     {
+                        id: 122,
                         ipAddress: '191.80.1.100',
                         lastUsedTimestamp: 10034032,
                         userAgent: 'Gecko 1.1 Chromium x86',
                     },
                     {
+                        id: 811,
                         ipAddress: '122.11.93.8',
                         lastUsedTimestamp: 100340898,
                         userAgent: 'Android Web View 4.1',
@@ -150,6 +191,72 @@ export default function ApiDocs(props) {
                 ],
             }}
         />,
+        <Method name="close_session" requestDataExample={{ id: 122 }}>
+            Close your user's session by id.
+        </Method>,
+    ]);
+
+    addSection('Posts', '/posts/', [
+        <Method
+            name="get_ids"
+            responseDataExample={{ ids: [12, 21, 33, 67, 99] }}
+        >
+            This method is used to get identities of posts, that have been
+            published by people, that your user subscribed for.
+        </Method>,
+
+        <Method
+            name="get"
+            requestDataExample={{ id: 3844 }}
+            responseDataExample={{
+                id: 3844,
+                content: 'Something long.',
+                author: { firstName: 'Donald', lastName: 'Trump', id: 4421 },
+                likesNumber: 123,
+                hasMyLike: true,
+            }}
+        />,
+        <Method
+            name="add_comment"
+            requestDataExample={{
+                post_id: 1212,
+                comment:
+                    "You have nice skills to write something! Don't stop, and you will be famous.",
+            }}
+        />,
+        <Method name="delete_comment" requestDataExample={{ id: 9434 }}>
+            Able to delete only conmments which have been added by your user.
+        </Method>,
+        <Method name="like" requestDataExample={{ id: 9434 }}>
+            This method is used to like post, and remove like, if user have
+            already put it.
+        </Method>,
+        <Method name="dislike" requestDataExample={{ id: 9434 }}>
+            This method is used to dislike post, and remove dislike, if user
+            have already put it.
+        </Method>,
+    ]);
+
+    addSection("Your user's posts", '/my_posts/', [
+        <Method
+            name="create"
+            requestDataExample={{ content: 'Something long.' }}
+        />,
+        <Method
+            name="get_ids"
+            responseDataExample={{ ids: [33, 141, 400, 902] }}
+        >
+            This method is used to get identities of posts, that have been
+            published by your user.
+        </Method>,
+        <Method
+            name="edit"
+            requestDataExample={{
+                id: 33,
+                newContent: 'Another something long.',
+            }}
+        />,
+        <Method name="delete" requestDataExample={{ id: 141 }} />,
     ]);
     return (
         <div id={styles.content}>

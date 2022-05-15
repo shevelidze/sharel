@@ -16,13 +16,16 @@
 }
 
 #sections {
-    position: sticky;
-    top: 0.5em;
+    top: 0;
     background-color: black;
     padding: 1em;
+    width: 100%;
+    transform: translateX(-1em);
     margin-bottom: 1em;
     border: 1px var(--post-grey-color) solid;
     box-shadow: 0 5px 10px black;
+    z-index: 1;
+
 }
 
 #sections>ul {
@@ -47,11 +50,7 @@
 }
 
 pre.code {
-    width: 100%;
-    position: relative;
-    left: -10px;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 1em;
 }
 
 .code * {
@@ -63,6 +62,14 @@ pre.code {
     margin-right: 0.5em;
 }
 
+.section {
+    margin-bottom: 6rem;
+}
+
 .method>* {
     margin-bottom: 0.5em;
+}
+
+.method {
+    margin-bottom: 3rem;
 }
