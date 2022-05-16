@@ -6,13 +6,19 @@ export default validateData(
         try {
             if (!verifyUser(request.body)) {
                 response.status(400);
-                response.json({ message: 'Wrong verification code.' });
+                response.json({
+                    message: 'Wrong verification code.',
+                    errors: ['wrongCode'],
+                });
             } else {
                 response.end();
             }
         } catch {
             response.status(400);
-            response.json({ message: 'User with this email not found.' });
+            response.json({
+                message: 'User with this email not found.',
+                errors: ['emailNotFound'],
+            });
         };
     },
     {

@@ -73,3 +73,13 @@ pre.code {
 .method {
     margin-bottom: 3rem;
 }
+
+.method table th {
+    font-weight: 600;
+}
+
+.method table, .method table th, .method table td {
+    border: 1px var(--post-grey-color) solid;
+    border-collapse: collapse;
+    padding: 0.5em;
+}

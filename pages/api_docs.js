@@ -106,6 +106,25 @@ function Method(props) {
                                 )}
                             />,
                         ]}
+                        {props.possibleErrors && [
+                            <h4>Possible errors</h4>,
+                            <table>
+                                <tr>
+                                    <th>Error</th>
+                                    <th>Description</th>
+                                </tr>
+                                {props.possibleErrors.map((errorObject) => (
+                                    <tr key={errorObject.error}>
+                                        <td>
+                                            <CodeInline>
+                                                {errorObject.error}
+                                            </CodeInline>
+                                        </td>
+                                        <td>{errorObject.description}</td>
+                                    </tr>
+                                ))}
+                            </table>,
+                        ]}
                     </div>
                 );
             }}
@@ -140,6 +159,13 @@ export default function ApiDocs(props) {
                 password: 'qwerty123',
             }}
             authorizationIsNotRequired={true}
+            possibleErrors={[
+                {
+                    error: 'emailHasTaken',
+                    description:
+                        'User with such email has been already registererd.',
+                },
+            ]}
         />,
         <Method
             httpMethod="POST"
@@ -149,6 +175,10 @@ export default function ApiDocs(props) {
                 verificationCodeFromEmail: '12212',
             }}
             authorizationIsNotRequired={true}
+            possibleErrors={[
+                { error: 'wrongCode' },
+                { error: 'emailNotFound' },
+            ]}
         >
             After sending registration data useing method{' '}
             <a href="#/sign_up">sign_up</a>, users should comnfirm their emails
@@ -162,6 +192,12 @@ export default function ApiDocs(props) {
                 password: 'qwerty123',
             }}
             authorizationIsNotRequired={true}
+            possibleErrors={[
+                {
+                    error: 'wrongUserData',
+                    description: 'Wrong email or password.',
+                },
+            ]}
         />,
     ]);
 
