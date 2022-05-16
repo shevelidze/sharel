@@ -20,31 +20,6 @@ function CodeBlock(props) {
 const MethodPrefixContext = React.createContext(null);
 
 function Section(props) {
-    const a = {
-        name: 'sharel',
-        private: true,
-        scripts: {
-            dev: 'next dev',
-            build: 'next build',
-            start: 'next start',
-            lint: 'next lint',
-        },
-        dependencies: {
-            '@prisma/client': '^3.8.1',
-            ajv: '^8.9.0',
-            'check-password-strength': '^2.0.3',
-            jsonwebtoken: '^8.5.1',
-            next: '^12.0.8',
-            react: '17.0.2',
-            'react-dom': '17.0.2',
-            'request-ip': '^2.1.3',
-        },
-        devDependencies: {
-            eslint: '8.4.1',
-            'eslint-config-next': '^0.2.4',
-            prisma: '^3.8.1',
-        },
-    };
     return (
         <div className={styles.section} id={props.name}>
             <div className={styles.header}>
@@ -204,8 +179,12 @@ export default function ApiDocs(props) {
     addSection('Profile', '/profile/', [
         <Method
             httpMethod="POST"
-            name="get_me"
-            responseDataExample={{ username: 'your username' }}
+            name="get"
+            responseDataExample={{
+                firstName: 'First name',
+                lastName: 'Last name',
+                id: 3,
+            }}
         ></Method>,
         <Method
             httpMethod="POST"
@@ -213,22 +192,29 @@ export default function ApiDocs(props) {
             responseDataExample={{
                 sesions: [
                     {
-                        id: 122,
+                        accessTokenHash:
+                            '94iQY+PvcZ8V0joSgOzWfA/a2KiulvWXbx183yly01A=',
                         ipAddress: '191.80.1.100',
-                        lastUsedTimestamp: 10034032,
+                        lastUsedTimestamp: '2022-05-16T15:20:01.805Z',
                         userAgent: 'Gecko 1.1 Chromium x86',
                     },
                     {
-                        id: 811,
+                        accessTokenHash:
+                            'cslBLON9Rp10n0RRqFfm8ksAG13SFkIm0ySXpsrLCNk=',
                         ipAddress: '122.11.93.8',
-                        lastUsedTimestamp: 100340898,
+                        lastUsedTimestamp: '2022-05-16T15:23:11.805Z',
                         userAgent: 'Android Web View 4.1',
                     },
                 ],
             }}
         />,
-        <Method name="close_session" requestDataExample={{ id: 122 }}>
-            Close your user's session by id.
+        <Method
+            name="close_session"
+            requestDataExample={{
+                accessTokenHash: '94iQY+PvcZ8V0joSgOzWfA/a2KiulvWXbx183yly01A=',
+            }}
+        >
+            Close your user's session by accessTokenHash.
         </Method>,
     ]);
 

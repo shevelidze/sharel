@@ -3,8 +3,9 @@ import Button from '../components/Button';
 import { apiFetch } from '../lib/apiFetch';
 import { useRouter } from 'next/router';
 
-function testFetch(router) {
-    apiFetch('/test_token', {}, true, router);
+async function testFetch(router) {
+    apiFetch('/profile/get', {}, true, router);
+    apiFetch('/profile/get_sessions', {}, true, router);
 }
 
 export default function Home(props) {
