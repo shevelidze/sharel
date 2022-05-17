@@ -1,0 +1,24 @@
+.header {
+    --logo-font-size: 48px;
+}
+
+.header, .header .group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .group>*:not(:last-child) {
+    margin-right: 15px;
+}
+
+.header .logo {
+    font-size: var(--logo-font-size);
+    font-weight: 900;
+}
+
+@media screen and (max-width: 900px) {
+    .header {
+        --logo-font-size: 36px;
+    }
+}

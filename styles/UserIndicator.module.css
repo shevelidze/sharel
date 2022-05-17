@@ -1,0 +1,9 @@
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user *:first-child {
+    margin-right: 1em;
+    font-weight: 800;
+}
