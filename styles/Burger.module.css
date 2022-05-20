@@ -1,0 +1,37 @@
+#burger {
+    width: 4em;
+    height: 3em;
+
+    cursor: pointer;
+
+    position: relative;
+    --indents: 15%;
+
+    --transition: 0.1s ease-in-out;
+}
+
+#burger>div {
+    height: 3px;
+    background: white;
+    width: 100%;
+    position: absolute;
+    transition: top var(--transition), bottom var(--transition);
+}
+
+#burger>div:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#burger>div:nth-child(1) {
+    top: var(--indents);
+}
+
+
+#burger>div:nth-child(3) {
+    bottom: var(--indents);
+}
+
+#burger:hover {
+    --indents: 0;
+}

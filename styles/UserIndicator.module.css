@@ -1,6 +1,7 @@
 .user {
     display: flex;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 .user *:first-child {
