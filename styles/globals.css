@@ -1,16 +1,45 @@
-html,
-body {
-  padding: 0;
+@import url('/Manrope-VariableFont_wght.ttf');
+
+:root {
+  --primary-text-color: #FFFFFF;
+  --secondary-text-color: #A9A9A9;
+
+  --background-color: #000000;
+
+  --primary-color: #242424;
+  --secondary-color: #404040;
+  --tertiary-color: #787878;
+
+  --subscription-color: #F13B3B;
+
+  --regular-font-size: 18px;
+  --title-font-size: 48px;
+
+  --regular-font-weight: 500;
+  --input-font-weight: 600;
+  --title-font-weight: 800;
+
+  --regular-shadow: 4px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 900px) {
+  :root {
+    --title-font-size: 36px;
+  }
+}
+
+html, body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+
+  background: var(--background-color);
+
+  font-family: 'Manrope', sans-serif;
+  font-size: var(--regular-font-size);
+  color: var(--primary-text-color);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+h1 {
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
 }
