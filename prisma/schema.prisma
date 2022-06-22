@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model likes {
+  id      Int    @id @default(autoincrement())
+  post_id Int?
+  user_id Int?
+  posts   posts? @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model posts {
+  id                 Int       @id @default(autoincrement())
+  content            String
+  creation_timestamp DateTime? @default(now()) @db.Timestamptz(6)
+  user_id            Int?
+  users              users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  likes              likes[]
+  views              views[]
+}
+
+model sessions {
+  user_id                    Int?
+  access_token_hash          String    @id
+  user_agent                 String
+  ip_address                 String
+  authentification_timestamp DateTime? @default(now()) @db.Timestamptz(6)
+  last_used_timestamp        DateTime? @db.Timestamptz(6)
+  users                      users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model subscriptions {
+  subscriber_user_id                            Int
+  user_id                                       Int
+  users_subscriptions_subscriber_user_idTousers users @relation("subscriptions_subscriber_user_idTousers", fields: [subscriber_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_subscriptions_user_idTousers            users @relation("subscriptions_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([subscriber_user_id, user_id])
+}
+
+model users {
+  id                                                    Int             @id @default(autoincrement())
+  first_name                                            String
+  last_name                                             String
+  email                                                 String          @unique
+  password_hash                                         String          @db.VarChar(64)
+  registration_timestamp                                DateTime?       @default(now()) @db.Timestamptz(6)
+  likes                                                 likes[]
+  posts                                                 posts[]
+  sessions                                              sessions[]
+  subscriptions_subscriptions_subscriber_user_idTousers subscriptions[] @relation("subscriptions_subscriber_user_idTousers")
+  subscriptions_subscriptions_user_idTousers            subscriptions[] @relation("subscriptions_user_idTousers")
+  views                                                 views[]
+}
+
+model views {
+  id      Int    @id @default(autoincrement())
+  post_id Int?
+  user_id Int?
+  posts   posts? @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
