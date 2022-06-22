@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from "next/head";
-import TestUmbrella from "./test-umbrella.svg";
+import Footer from "../components/Footer";
 
 const Home: NextPage = () => {
     return (
@@ -13,7 +13,7 @@ const Home: NextPage = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <TestUmbrella width="500px" />
+            <Footer />
         </div>
     );
 };
