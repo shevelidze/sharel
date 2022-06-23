@@ -39,6 +39,7 @@ html, body {
 
   font-family: 'Manrope', sans-serif;
   font-size: var(--regular-font-size);
+  font-weight: var(--regular-font-weight);
   color: var(--primary-text-color);
 }
 
