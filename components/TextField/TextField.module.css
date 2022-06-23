@@ -1,0 +1,64 @@
+.root {
+  --input-border-width: 2px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.root .indicator {
+  position: absolute;
+  right: 1em;
+}
+
+.root input:focus {
+  outline: none;
+}
+
+.root input {
+  box-sizing: border-box;
+  width: 100%;
+
+  --input-foreground-color: var(--secondary-color);
+
+  background: var(--background-color);
+  color: var(--tertiary-color);
+
+  font-size: 1rem;
+  padding: 0.75em;
+
+  --input-border-color: var(--input-foreground-color);
+
+  border: var(--input-border-width) solid var(--input-border-color);
+
+  transition: border-color var(--regular-transition), color var(--regular-transition);
+}
+
+.root.withError input {
+  --input-foreground-color: var(--error-color);
+}
+
+.root input:focus {
+  color: var(--primary-text-color);
+  --input-border-color: var(--primary-text-color);
+}
+
+.root input::placeholder {
+  color: var(--secondary-color);
+  font-weight: var(--input-font-weight);
+
+  transition: color var(--regular-transition);
+}
+
+.root :global(.visibility-icon) {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.root .error {
+  font-size: 0.8em;
+  color: var(--error-color);
+  margin-left: var(--input-border-width);
+}

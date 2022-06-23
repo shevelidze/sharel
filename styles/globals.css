@@ -10,7 +10,9 @@
   --secondary-color: #404040;
   --tertiary-color: #787878;
 
-  --subscription-color: #F13B3B;
+  --subscription-color: #f13b3b;
+
+  --error-color: #c00000;
 
   --regular-font-size: 18px;
   --title-font-size: 48px;
@@ -20,6 +22,7 @@
   --title-font-weight: 800;
 
   --regular-shadow: 4px 4px 15px rgba(0, 0, 0, 0.5);
+  --regular-transition: .2s ease-in-out;
 }
 
 @media screen and (max-width: 900px) {
