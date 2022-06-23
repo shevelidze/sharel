@@ -6,12 +6,14 @@ export interface TextFieldProps {
   isHidable?: boolean;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   error?: string;
+  placeholder?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
   isHidable,
   inputProps,
   error,
+  placeholder,
 }) => {
   const [isHidden, setIsHidden] = useState(Boolean(isHidable));
 
@@ -24,7 +26,7 @@ const TextField: React.FC<TextFieldProps> = ({
       <div className={styles.inputWrapper}>
         <input
           type={isHidden ? 'password' : 'text'}
-          placeholder="Hello"
+          placeholder={placeholder}
           {...inputProps}
         />
         {isHidable ? (

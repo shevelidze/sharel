@@ -1,5 +1,6 @@
 .root {
   --input-border-width: 2px;
+  padding-bottom: 1em;
 }
 
 .inputWrapper {

@@ -4,7 +4,7 @@ import TextField, { type TextFieldProps } from '../TextField';
 
 interface FormikTextFieldProps {
   formikFieldProps: FieldAttributes<any>;
-  textFieldProps: TextFieldProps;
+  textFieldProps?: TextFieldProps;
 }
 
 const FormikTextField: React.FC<FormikTextFieldProps> = ({
