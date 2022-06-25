@@ -62,4 +62,5 @@
   font-size: 0.8em;
   color: var(--error-color);
   margin-left: var(--input-border-width);
+  white-space: pre-line;
 }

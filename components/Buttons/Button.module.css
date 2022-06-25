@@ -25,3 +25,8 @@ button.root {
 .root:hover {
   background: none;
 }
+
+.root:disabled {
+  color: var(--tertiary-color);
+  background: var(--primary-color);
+}

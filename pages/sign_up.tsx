@@ -5,8 +5,29 @@ import checkIfUnauthorized from '../lib/checkIfUnauthorized';
 import { RegularButton } from '../components/Buttons';
 import StyledFormikForm from '../components/StyledFormikForm';
 import FormikTextField from '../components/FormikTextField';
+import * as Yup from 'yup';
 
 export const getServerSideProps = checkIfUnauthorized;
+
+const signUpFormSchema = Yup.object({
+  fullName: Yup.string().required('Full name is required.'),
+  username: Yup.string().required('Username is required.'),
+  email: Yup.string().email('Email is invalid.').required('Email is required.'),
+  password: Yup.string()
+    .required('Password is required.')
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g,
+      `Password must be at least 8 characters long, and contain:
+    - at least one special character
+    - at least one lowercase letter
+    - at least one upercase letter
+    `
+    ),
+  passwordRepeat: Yup.string().oneOf(
+    [Yup.ref('password')],
+    "Passwords don't match."
+  ),
+});
 
 const SignUp: NextPage = () => {
   return (
@@ -18,34 +39,39 @@ const SignUp: NextPage = () => {
         password: '',
         passwordRepeat: '',
       }}
-      onSubmit={() => {
+      validationSchema={signUpFormSchema}
+      onSubmit={async () => {
         alert('Submit!');
       }}
     >
-      <StyledFormikForm>
-        <h1>Sign up</h1>
-        <FormikTextField
-          formikFieldProps={{ name: 'fullName' }}
-          textFieldProps={{ placeholder: 'Full name' }}
-        />
-        <FormikTextField
-          formikFieldProps={{ name: 'username' }}
-          textFieldProps={{ placeholder: 'Username' }}
-        />
-        <FormikTextField
-          formikFieldProps={{ name: 'email' }}
-          textFieldProps={{ placeholder: 'Email' }}
-        />
-        <FormikTextField
-          formikFieldProps={{ name: 'password' }}
-          textFieldProps={{ placeholder: 'Password', isHidable: true }}
-        />
-        <FormikTextField
-          formikFieldProps={{ name: 'passwordRepeat' }}
-          textFieldProps={{ placeholder: 'Repeat password', isHidable: true }}
-        />
-        <RegularButton type="submit">Submit</RegularButton>
-      </StyledFormikForm>
+      {({ isSubmitting, isValid }) => (
+        <StyledFormikForm>
+          <h1>Sign up</h1>
+          <FormikTextField
+            formikFieldProps={{ name: 'fullName' }}
+            textFieldProps={{ placeholder: 'Full name' }}
+          />
+          <FormikTextField
+            formikFieldProps={{ name: 'username' }}
+            textFieldProps={{ placeholder: 'Username' }}
+          />
+          <FormikTextField
+            formikFieldProps={{ name: 'email' }}
+            textFieldProps={{ placeholder: 'Email' }}
+          />
+          <FormikTextField
+            formikFieldProps={{ name: 'password' }}
+            textFieldProps={{ placeholder: 'Password', isHidable: true }}
+          />
+          <FormikTextField
+            formikFieldProps={{ name: 'passwordRepeat' }}
+            textFieldProps={{ placeholder: 'Repeat password', isHidable: true }}
+          />
+          <RegularButton type="submit" disabled={isSubmitting || !isValid}>
+            Submit
+          </RegularButton>
+        </StyledFormikForm>
+      )}
     </Formik>
   );
 };
