@@ -1,12 +1,12 @@
 import QueryHandler from './QueryHandler';
 import EntityQueryHandler from './EntityQueryHandler';
-import { EntitiesPrefixMissingError, InvalidEntityNameError } from '../Errors';
+import { EntitiesPrefixMissingError, InvalidEntityNameError } from '../errors';
 
 export default class InitialQueryHandler implements QueryHandler {
   constructor(entityQueryHandlers: EntityQueryHandler[]) {
     this.entityQueryHandlers = entityQueryHandlers;
   }
-  handleQueryElement(query: string[], httpMethod: string) {
+  async handleQueryElement(query: string[]) {
     if (query[0] !== 'entities') throw new EntitiesPrefixMissingError();
     query.shift();
     for (const handler of this.entityQueryHandlers) {

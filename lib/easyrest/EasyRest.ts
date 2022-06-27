@@ -9,19 +9,24 @@ import {
 export default class EasyRest {
   constructor(entities: Entity[]) {
     this.entities = entities;
-    this.intialQueryHandler = new InitialQueryHandler(
-      this.entities.map((value) => new EntityQueryHandler(value))
-    );
+
+    const entityQueryHandlers: EntityQueryHandler[] = [];
+    for (const entity of this.entities)
+      entityQueryHandlers.push(
+        new EntityQueryHandler(entity, entityQueryHandlers)
+      );
+
+    this.intialQueryHandler = new InitialQueryHandler(entityQueryHandlers);
   }
-  processQuery(
+  async processQuery(
     query: string[],
     httpMethod: string,
     bodyObject: any
-  ): ApiResult {
+  ): Promise<ApiResult> {
     let currentQueryHandler = this.intialQueryHandler;
 
     while (query.length > 0) {
-      let handlerResult = currentQueryHandler.handleQueryElement(
+      let handlerResult = await currentQueryHandler.handleQueryElement(
         query,
         httpMethod,
         bodyObject

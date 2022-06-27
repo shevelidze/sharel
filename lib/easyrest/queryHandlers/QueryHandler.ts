@@ -8,5 +8,5 @@ export default interface QueryHandler {
     query: string[],
     httpMethod: string,
     body: any
-  ) => QueryHandler | ApiResult;
+  ) => Promise<QueryHandler | ApiResult>;
 }
