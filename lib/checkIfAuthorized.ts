@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 
-
 const checkIfAuthorized: GetServerSideProps = async (context) => {
   if (context.req.cookies.is_authorized === 'true') {
     return {
