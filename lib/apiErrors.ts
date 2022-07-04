@@ -34,7 +34,7 @@ export class AccessTokenExpiredApiError extends ApiError {
 }
 
 export class InvalidRequestBodyApiError extends ApiError {
-  constructor(yupMessage: string) {
-    super(400, 3, yupMessage);
+  constructor(message: string) {
+    super(400, 3, message);
   }
 }

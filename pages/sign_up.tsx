@@ -10,8 +10,8 @@ import * as Yup from 'yup';
 export const getServerSideProps = checkIfUnauthorized;
 
 const signUpFormSchema = Yup.object({
-  fullName: Yup.string().required('Full name is required.'),
-  username: Yup.string().required('Username is required.'),
+  firstName: Yup.string().required('First name is required.'),
+  lastName: Yup.string().required('Last name is required.'),
   email: Yup.string().email('Email is invalid.').required('Email is required.'),
   password: Yup.string()
     .required('Password is required.')
@@ -33,8 +33,8 @@ const SignUp: NextPage = () => {
   return (
     <Formik
       initialValues={{
-        fullName: '',
-        username: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         passwordRepeat: '',
@@ -48,12 +48,12 @@ const SignUp: NextPage = () => {
         <StyledFormikForm>
           <h1>Sign up</h1>
           <FormikTextField
-            formikFieldProps={{ name: 'fullName' }}
-            textFieldProps={{ placeholder: 'Full name' }}
+            formikFieldProps={{ name: 'firstName' }}
+            textFieldProps={{ placeholder: 'First name' }}
           />
           <FormikTextField
-            formikFieldProps={{ name: 'username' }}
-            textFieldProps={{ placeholder: 'Username' }}
+            formikFieldProps={{ name: 'lastName' }}
+            textFieldProps={{ placeholder: 'Last name' }}
           />
           <FormikTextField
             formikFieldProps={{ name: 'email' }}
