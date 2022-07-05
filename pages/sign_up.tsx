@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import checkIfUnauthorized from '../lib/checkIfUnauthorized';
 import { RegularButton } from '../components/Buttons';
 import StyledFormikForm from '../components/StyledFormikForm';
 import FormikTextField from '../components/FormikTextField';
 import * as Yup from 'yup';
+import sendJson from '../lib/sendJson';
 
 export const getServerSideProps = checkIfUnauthorized;
 
@@ -30,6 +32,8 @@ const signUpFormSchema = Yup.object({
 });
 
 const SignUp: NextPage = () => {
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   return (
     <Formik
       initialValues={{
@@ -40,12 +44,23 @@ const SignUp: NextPage = () => {
         passwordRepeat: '',
       }}
       validationSchema={signUpFormSchema}
-      onSubmit={async () => {
-        alert('Submit!');
+      onSubmit={async (values) => {
+        const response = await sendJson('api/auth/sign_up', values);
+        if (response.status === 400) {
+          setErrorMessage((await response.json()).message);
+        } else if (response.ok) {
+          const tokens = await response.json();
+          localStorage.setItem('userAccessToken', tokens.access);
+          localStorage.setItem('userRefreshToken', tokens.refresh);
+          document.cookie = 'is_authorized=true';
+          router.replace('/home');
+        } else {
+          alert('Unknown error. Please contact the administrator.');
+        }
       }}
     >
       {({ isSubmitting, isValid }) => (
-        <StyledFormikForm>
+        <StyledFormikForm errorMessage={errorMessage}>
           <h1>Sign up</h1>
           <FormikTextField
             formikFieldProps={{ name: 'firstName' }}

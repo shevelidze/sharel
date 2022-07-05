@@ -10,3 +10,7 @@
   max-width: 500px;
   flex-grow: 1;
 }
+
+.error {
+  color: var(--error-color);
+}
