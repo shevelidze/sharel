@@ -15,10 +15,9 @@ export class ErrorOnRefreshing extends Error {
   response: Response;
 }
 
-export type LogoutHandler = () => void;
 
 export default class UserAuthentification {
-  static getAuthentification(onLogout: LogoutHandler) {
+  static getAuthentification() {
     const accessTokenLocalValue = localStorage.getItem('userAccessToken');
     const refreshTokenLocalValue = localStorage.getItem('userRefreshToken');
 
@@ -27,15 +26,10 @@ export default class UserAuthentification {
 
     return new UserAuthentification(
       accessTokenLocalValue,
-      refreshTokenLocalValue,
-      onLogout
+      refreshTokenLocalValue
     );
   }
-  constructor(
-    accessToken: string,
-    refreshToken: string,
-    onLogout: LogoutHandler
-  ) {
+  constructor(accessToken: string, refreshToken: string) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
 
@@ -55,7 +49,7 @@ export default class UserAuthentification {
       else throw e;
     }
 
-    this.onLogout = onLogout;
+    this.refreshingPromise = null;
   }
   async fetch(input: RequestInfo | URL, init?: RequestInit | undefined) {
     const dataFetch = () =>
@@ -66,22 +60,28 @@ export default class UserAuthentification {
         },
       });
 
+    if (this.refreshingPromise) {
+      const refreshResponse = await this.refreshingPromise;
+      if (!refreshResponse.ok) throw new ErrorOnRefreshing(refreshResponse);
+    }
+
     const dataResponse = await dataFetch();
     if (dataResponse.status === 403) {
-      const refreshResponse = await fetch('/api/auth/refresh', {
+      this.refreshingPromise = fetch('/api/auth/refresh', {
         headers: {
           Authorization: this.refreshToken,
         },
       });
+      const refreshResponse = await this.refreshingPromise;
+      this.refreshingPromise = null;
       if (refreshResponse.ok) {
+        console.log('Tokens have been successfully refreshed.');
         ({ accessToken: this.accessToken, refreshToken: this.refreshToken } =
           await refreshResponse.json());
         return await dataFetch();
       } else if (refreshResponse.status === 401) {
         localStorage.removeItem('JWTAccessToken');
         localStorage.removeItem('JWTRefreshToken');
-
-        this.onLogout();
       } else throw new ErrorOnRefreshing(refreshResponse);
     }
 
@@ -93,5 +93,5 @@ export default class UserAuthentification {
   id: number;
   accessToken: string;
   refreshToken: string;
-  onLogout: LogoutHandler;
+  refreshingPromise: Promise<Response> | null;
 }

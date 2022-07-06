@@ -9,6 +9,7 @@ import {
   InvalidAccessTokenApiError,
 } from '../apiErrors';
 import Middleware from './Middleware';
+import { type UserTokenPayload } from '../generateUserTokensPair';
 
 export type UserId = number;
 
@@ -16,11 +17,10 @@ export function getTokenFromAuthorization(authorization: string) {
   return /^Bearer (.*)$/.exec(authorization)?.[1];
 }
 
-const authorizationMiddleware: Middleware<UserId, [string | undefined]> = (
-  req,
-  res,
-  tokenType = 'access'
-) => {
+const authorizationMiddleware: Middleware<
+  UserTokenPayload,
+  [string | undefined]
+> = (req, res, tokenType = 'access') => {
   if (req.headers.authorization === undefined) {
     new InvalidAccessTokenApiError().send(res);
     return;
@@ -37,7 +37,7 @@ const authorizationMiddleware: Middleware<UserId, [string | undefined]> = (
     const decoded = jwt.verify(token, JWTSecretKey);
     if (typeof decoded === 'string' || decoded.type !== tokenType)
       new InvalidAccessTokenApiError().send(res);
-    else return decoded.id as number;
+    else return decoded as UserTokenPayload;
   } catch (e) {
     if (e instanceof TokenExpiredError)
       new AccessTokenExpiredApiError().send(res);

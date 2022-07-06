@@ -7,14 +7,18 @@ export async function createUserSession(
   userAgent?: string
 ): Promise<TokensPair> {
   const prismaFetchResult = await prisma.sessions.create({
-    select: { refresh_token_id: true },
+    select: { refresh_token_id: true, id: true },
     data: {
       user_id: userId,
       ip_address: ipAddress,
       user_agent: userAgent,
     },
   });
-  return generateUserTokensPair(userId, prismaFetchResult.refresh_token_id);
+  return generateUserTokensPair(
+    userId,
+    prismaFetchResult.refresh_token_id,
+    prismaFetchResult.id
+  );
 }
 
 class InvalidSessionError extends Error {
@@ -46,5 +50,9 @@ export async function refreshUserSession(
     },
   });
 
-  return generateUserTokensPair(userId, newRefreshTokenId);
+  return generateUserTokensPair(
+    userId,
+    newRefreshTokenId,
+    prismaFetchResult.id
+  );
 }

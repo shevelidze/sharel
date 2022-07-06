@@ -9,6 +9,7 @@ import FormikTextField from '../components/FormikTextField';
 import * as Yup from 'yup';
 import sendJson from '../lib/sendJson';
 import useUser from '../lib/useUser';
+import alertUnknownError from '../lib/alertUnknownError';
 
 export const getServerSideProps = checkIfUnauthorized;
 
@@ -52,7 +53,7 @@ const SignUp: NextPage = () => {
         } else if (response.ok) {
           setTokens(await response.json());
         } else {
-          alert('Unknown error. Please contact the administrator.');
+          alertUnknownError();
         }
       }}
     >

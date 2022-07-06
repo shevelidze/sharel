@@ -8,6 +8,7 @@ import StyledFormikForm from '../components/StyledFormikForm';
 import sendJson from '../lib/sendJson';
 import useUser from '../lib/useUser';
 import * as Yup from 'yup';
+import alertUnknownError from '../lib/alertUnknownError';
 
 export const getServerSideProps = checkIfUnauthorized;
 
@@ -29,7 +30,7 @@ const SignIn: NextPage = () => {
         } else if (response.ok) {
           setTokens(await response.json());
         } else {
-          alert('Unknown error. Please contact the administrator.');
+          alertUnknownError();
         }
       }}
       validationSchema={schema}

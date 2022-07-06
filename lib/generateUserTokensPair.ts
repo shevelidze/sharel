@@ -7,14 +7,36 @@ export interface TokensPair {
   refresh: string;
 }
 
+export interface UserTokenPayload {
+  type: 'access' | 'refresh';
+}
+
+export interface UserAccessTokenPayload extends UserTokenPayload {
+  type: 'access';
+  userId: number;
+}
+
+export interface UserRefreshTokenPayload extends UserTokenPayload {
+  type: 'refresh';
+  id: number;
+  sessionId: number;
+}
+
 export default function generateUserTokensPair(
   userId: UserId,
-  refreshTokenId: number
+  refreshTokenId: number,
+  sessionId: number
 ): TokensPair {
+  const accessPayload: UserAccessTokenPayload = { userId, type: 'access' };
+  const refreshPayload: UserRefreshTokenPayload = {
+    type: 'refresh',
+    id: refreshTokenId,
+    sessionId: sessionId,
+  };
   return {
-    access: jwt.sign({ userId }, JWTSecretKey, {
+    access: jwt.sign(accessPayload, JWTSecretKey, {
       expiresIn: '5m',
     }),
-    refresh: jwt.sign({ userId, id: refreshTokenId }, JWTSecretKey),
+    refresh: jwt.sign(refreshPayload, JWTSecretKey),
   };
 }
