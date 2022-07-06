@@ -5,10 +5,15 @@ import UserAuthentification from '../../lib/useUser/UserAuthentification';
 const AuthentificationProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [user, setUser] = useState<UserAuthentification | null>(null);
+  const [user, setUser] = useState<UserAuthentification | null>(
+    UserAuthentification.getAuthentification(() => {})
+  );
   return (
     <UserContext.Provider
-      value={[user, () => setUser(new UserAuthentification(() => {}))]}
+      value={[
+        user,
+        () => setUser(UserAuthentification.getAuthentification(() => {})),
+      ]}
     >
       {children}
     </UserContext.Provider>

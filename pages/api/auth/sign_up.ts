@@ -5,7 +5,8 @@ import prisma from '../../../lib/prisma';
 import generateHash from '../../../lib/generateHash';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { InvalidRequestBodyApiError } from '../../../lib/apiErrors';
-import generateUserTokensPair from '../../../lib/generateUserTokensPair';
+import { createUserSession } from '../../../lib/userSession';
+import requestIp from 'request-ip';
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -18,10 +19,10 @@ const signUp: NextApiHandler = async (req, res) => {
   const body = bodyValidationMiddleware(req, res, schema, ['POST']);
   if (body === undefined) return;
 
-  let id: number;
+  let userId: number;
 
   try {
-    id = (
+    userId = (
       await prisma.users.create({
         select: {
           id: true,
@@ -48,7 +49,13 @@ const signUp: NextApiHandler = async (req, res) => {
     } else throw e;
   }
 
-  res.json(generateUserTokensPair(id));
+  res.json(
+    await createUserSession(
+      userId,
+      requestIp.getClientIp(req) || undefined,
+      req.headers['user-agent']
+    )
+  );
 };
 
 export default signUp;

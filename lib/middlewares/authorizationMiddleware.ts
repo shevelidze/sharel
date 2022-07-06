@@ -16,7 +16,11 @@ export function getTokenFromAuthorization(authorization: string) {
   return /^Bearer (.*)$/.exec(authorization)?.[1];
 }
 
-const authorizationMiddleware: Middleware<UserId, []> = (req, res) => {
+const authorizationMiddleware: Middleware<UserId, [string | undefined]> = (
+  req,
+  res,
+  tokenType = 'access'
+) => {
   if (req.headers.authorization === undefined) {
     new InvalidAccessTokenApiError().send(res);
     return;
@@ -31,7 +35,8 @@ const authorizationMiddleware: Middleware<UserId, []> = (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWTSecretKey);
-    if (typeof decoded === 'string') new InvalidAccessTokenApiError().send(res);
+    if (typeof decoded === 'string' || decoded.type !== tokenType)
+      new InvalidAccessTokenApiError().send(res);
     else return decoded.id as number;
   } catch (e) {
     if (e instanceof TokenExpiredError)

@@ -17,6 +17,7 @@
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "request-ip": "3.0.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
+    "@types/request-ip": "^0.0.37",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
     "jest": "^28.1.2",

@@ -26,10 +26,9 @@ const signUpFormSchema = Yup.object({
     - at least one upercase letter
     `
     ),
-  passwordRepeat: Yup.string().oneOf(
-    [Yup.ref('password')],
-    "Passwords don't match."
-  ),
+  passwordRepeat: Yup.string()
+    .required('')
+    .oneOf([Yup.ref('password')], "Passwords don't match."),
 });
 
 const SignUp: NextPage = () => {

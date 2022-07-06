@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import sendJson from '../fetchJson';
+import sendJson from '../sendJson';
 
 export class UnauthorizedError extends Error {
   constructor() {
@@ -15,16 +15,29 @@ export class ErrorOnRefreshing extends Error {
   response: Response;
 }
 
+export type LogoutHandler = () => void;
+
 export default class UserAuthentification {
-  constructor(onLogOut: () => void) {
+  static getAuthentification(onLogout: LogoutHandler) {
     const accessTokenLocalValue = localStorage.getItem('userAccessToken');
-    const refreshTokenAccessValue = localStorage.getItem('userRefreshToken');
+    const refreshTokenLocalValue = localStorage.getItem('userRefreshToken');
 
-    if (accessTokenLocalValue === null || refreshTokenAccessValue === null)
-      throw UnauthorizedError;
+    if (accessTokenLocalValue === null || refreshTokenLocalValue === null)
+      return null;
 
-    this.accessToken = accessTokenLocalValue;
-    this.refreshToken = refreshTokenAccessValue;
+    return new UserAuthentification(
+      accessTokenLocalValue,
+      refreshTokenLocalValue,
+      onLogout
+    );
+  }
+  constructor(
+    accessToken: string,
+    refreshToken: string,
+    onLogout: LogoutHandler
+  ) {
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
 
     try {
       const decoded = jwt.decode(this.refreshToken, { json: true });
@@ -42,7 +55,7 @@ export default class UserAuthentification {
       else throw e;
     }
 
-    this.onLogOut = onLogOut;
+    this.onLogout = onLogout;
   }
   async fetch(input: RequestInfo | URL, init?: RequestInit | undefined) {
     const dataFetch = () =>
@@ -68,7 +81,7 @@ export default class UserAuthentification {
         localStorage.removeItem('JWTAccessToken');
         localStorage.removeItem('JWTRefreshToken');
 
-        this.onLogOut();
+        this.onLogout();
       } else throw new ErrorOnRefreshing(refreshResponse);
     }
 
@@ -80,5 +93,5 @@ export default class UserAuthentification {
   id: number;
   accessToken: string;
   refreshToken: string;
-  onLogOut: () => void;
+  onLogout: LogoutHandler;
 }

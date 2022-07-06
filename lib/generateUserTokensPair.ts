@@ -2,11 +2,19 @@ import jwt from 'jsonwebtoken';
 import JWTSecretKey from './JWTSecretKey';
 import type { UserId } from './middlewares/authorizationMiddleware';
 
-export default function generateUserTokensPair(id: UserId) {
+export interface TokensPair {
+  access: string;
+  refresh: string;
+}
+
+export default function generateUserTokensPair(
+  userId: UserId,
+  refreshTokenId: number
+): TokensPair {
   return {
-    access: jwt.sign({ id }, JWTSecretKey, {
+    access: jwt.sign({ userId }, JWTSecretKey, {
       expiresIn: '5m',
     }),
-    refresh: jwt.sign({ id }, JWTSecretKey),
+    refresh: jwt.sign({ userId, id: refreshTokenId }, JWTSecretKey),
   };
 }

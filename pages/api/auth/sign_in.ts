@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import { bodyValidationMiddleware } from '../../../lib/middlewares';
 import generateHash from '../../../lib/generateHash';
 import { InvalidRequestBodyApiError } from '../../../lib/apiErrors';
-import generateUserTokensPair from '../../../lib/generateUserTokensPair';
+import { createUserSession } from '../../../lib/userSession';
+import requestIp from 'request-ip';
 
 const schema = Yup.object().shape({
   email: Yup.string().required(),
@@ -26,7 +27,13 @@ const signIn: NextApiHandler = async (req, res) => {
   if (prismaFetchResult === null)
     new InvalidRequestBodyApiError('Wrong email or password.').send(res);
   else {
-    res.json(generateUserTokensPair(prismaFetchResult.id));
+    res.json(
+      await createUserSession(
+        prismaFetchResult.id,
+        requestIp.getClientIp(req) || undefined,
+        req.headers['user-agent']
+      )
+    );
   }
 };
 
