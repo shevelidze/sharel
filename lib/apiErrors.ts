@@ -29,12 +29,24 @@ export class InvalidAccessTokenApiError extends ApiError {
 
 export class AccessTokenExpiredApiError extends ApiError {
   constructor() {
-    super(401, 1, 'Your access token has been expired.');
+    super(403, 1, 'Your access token has been expired.');
   }
 }
 
 export class InvalidRequestBodyApiError extends ApiError {
   constructor(message: string) {
     super(400, 3, message);
+  }
+}
+
+export class MethodNotAllowedApiError extends ApiError {
+  constructor(allowedMethods?: string[]) {
+    super(
+      405,
+      4,
+      `Method not allowed.${
+        allowedMethods === undefined ? '' : ` Try ${allowedMethods.join(', ')}.`
+      }`
+    );
   }
 }

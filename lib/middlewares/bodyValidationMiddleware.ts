@@ -1,12 +1,21 @@
 import * as Yup from 'yup';
 import Middleware from './Middleware';
-import { InvalidRequestBodyApiError } from '../apiErrors';
+import {
+  InvalidRequestBodyApiError,
+  MethodNotAllowedApiError,
+} from '../apiErrors';
 
-const bodyValidationMiddleware: Middleware<any, [Yup.AnySchema]> = (
-  req,
-  res,
-  schema
-) => {
+const bodyValidationMiddleware: Middleware<
+  any,
+  [Yup.AnySchema, string[] | undefined]
+> = (req, res, schema, methods?: string[]) => {
+  if (
+    methods !== undefined &&
+    (req.method === undefined || !methods.includes(req.method))
+  ) {
+    new MethodNotAllowedApiError(methods).send(res);
+    return;
+  }
   try {
     return schema.validateSync(req.body, { abortEarly: false });
   } catch (e) {

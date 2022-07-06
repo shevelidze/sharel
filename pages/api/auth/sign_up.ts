@@ -15,7 +15,7 @@ const schema = Yup.object().shape({
 });
 
 const signUp: NextApiHandler = async (req, res) => {
-  const body = bodyValidationMiddleware(req, res, schema);
+  const body = bodyValidationMiddleware(req, res, schema, ['POST']);
   if (body === undefined) return;
 
   let id: number;

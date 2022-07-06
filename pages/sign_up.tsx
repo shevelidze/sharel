@@ -8,6 +8,7 @@ import StyledFormikForm from '../components/StyledFormikForm';
 import FormikTextField from '../components/FormikTextField';
 import * as Yup from 'yup';
 import sendJson from '../lib/sendJson';
+import useUser from '../lib/useUser';
 
 export const getServerSideProps = checkIfUnauthorized;
 
@@ -34,6 +35,7 @@ const signUpFormSchema = Yup.object({
 const SignUp: NextPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [user, setTokens] = useUser();
   return (
     <Formik
       initialValues={{
@@ -49,11 +51,7 @@ const SignUp: NextPage = () => {
         if (response.status === 400) {
           setErrorMessage((await response.json()).message);
         } else if (response.ok) {
-          const tokens = await response.json();
-          localStorage.setItem('userAccessToken', tokens.access);
-          localStorage.setItem('userRefreshToken', tokens.refresh);
-          document.cookie = 'is_authorized=true';
-          router.replace('/home');
+          setTokens(await response.json());
         } else {
           alert('Unknown error. Please contact the administrator.');
         }
