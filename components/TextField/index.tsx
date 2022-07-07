@@ -9,11 +9,12 @@ export interface TextFieldProps {
   placeholder?: string;
 }
 
-const TextField: React.FC<TextFieldProps> = ({
+const TextField: React.FC<TextFieldProps & React.PropsWithChildren> = ({
   isHidable,
   inputProps,
   error,
   placeholder,
+  children,
 }) => {
   const [isHidden, setIsHidden] = useState(Boolean(isHidable));
 
@@ -29,14 +30,17 @@ const TextField: React.FC<TextFieldProps> = ({
           placeholder={placeholder}
           {...inputProps}
         />
-        {isHidable ? (
-          <VisibilityIndicator
-            isHidden={isHidden}
-            onClick={() => {
-              setIsHidden(!isHidden);
-            }}
-          />
-        ) : null}
+        <div className={styles.icons}>
+          {children}
+          {isHidable ? (
+            <VisibilityIndicator
+              isHidden={isHidden}
+              onClick={() => {
+                setIsHidden(!isHidden);
+              }}
+            />
+          ) : null}
+        </div>
       </div>
 
       {error !== undefined ? <div className={styles.error}>{error}</div> : null}

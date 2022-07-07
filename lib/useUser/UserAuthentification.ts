@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import sendJson from '../sendJson';
+import saveTokens from './saveTokens';
 
 export class UnauthorizedError extends Error {
   constructor() {
@@ -14,7 +15,6 @@ export class ErrorOnRefreshing extends Error {
   }
   response: Response;
 }
-
 
 export default class UserAuthentification {
   static getAuthentification() {
@@ -76,12 +76,15 @@ export default class UserAuthentification {
       this.refreshingPromise = null;
       if (refreshResponse.ok) {
         console.log('Tokens have been successfully refreshed.');
-        ({ accessToken: this.accessToken, refreshToken: this.refreshToken } =
-          await refreshResponse.json());
+        const newTokens = await refreshResponse.json();
+        saveTokens(newTokens);
+        this.accessToken = newTokens.access;
+        this.refreshToken = newTokens.refresh;
         return await dataFetch();
       } else if (refreshResponse.status === 401) {
         localStorage.removeItem('JWTAccessToken');
         localStorage.removeItem('JWTRefreshToken');
+        console.log('Session is not already valid.');
       } else throw new ErrorOnRefreshing(refreshResponse);
     }
 

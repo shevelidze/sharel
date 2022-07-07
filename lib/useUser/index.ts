@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import UserContext from './UserContext';
 import UserAuthentification from './UserAuthentification';
 import alertUnknownError from '../alertUnknownError';
+import saveTokens from './saveTokens';
 
 export type SignIn = (
   tokens: { access: string; refresh: string },
@@ -11,15 +12,17 @@ export type SignIn = (
 
 export type SignOut = (redirect?: boolean) => Promise<void>;
 
-export default function useUser(): [UserAuthentification | null, SignIn, SignOut] {
+export default function useUser(): [
+  UserAuthentification | null,
+  SignIn,
+  SignOut
+] {
   const router = useRouter();
   const [user, updateUser] = useContext(UserContext);
   return [
     user,
     (tokens, redirect = true) => {
-      localStorage.setItem('userAccessToken', tokens.access);
-      localStorage.setItem('userRefreshToken', tokens.refresh);
-      document.cookie = 'is_authorized=true';
+      saveTokens(tokens);
       updateUser();
       if (redirect) router.replace('/home');
     },

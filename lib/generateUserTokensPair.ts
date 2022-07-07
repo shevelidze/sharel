@@ -37,6 +37,6 @@ export default function generateUserTokensPair(
     access: jwt.sign(accessPayload, JWTSecretKey, {
       expiresIn: '5m',
     }),
-    refresh: jwt.sign(refreshPayload, JWTSecretKey),
+    refresh: jwt.sign(refreshPayload, JWTSecretKey, { expiresIn: '30d' }),
   };
 }
