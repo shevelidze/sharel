@@ -1,0 +1,19 @@
+.drawer {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  padding: .5em;
+  background-color: var(--primary-color);
+  z-index: 1002;
+  max-width: calc(100vw - 5em);
+}
+
+.darkness {
+  background: black;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}

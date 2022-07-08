@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+}
+
+.root>* {
+  padding: 0;
+}
+
+.root>*:first-child {
+  width: 100%;
+}
+
+.root>*:nth-child(2) {
+  width: max-content;
+}
