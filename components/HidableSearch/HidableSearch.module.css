@@ -1,9 +1,0 @@
-.root {
-  width: 100%;
-  transition: width 3s ease-in-out;
-  overflow: hidden;
-}
-
-.root.closed {
-  width: 27px;
-}

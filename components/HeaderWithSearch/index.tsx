@@ -15,7 +15,9 @@ const HeaderWithSearch: React.FC = () => {
   return (
     <Switcher animationIsDisabled={animationInSwitcherIsDisabled}>
       {searchIsOpened ? (
-        <Search onCloseSearchClick={() => setSearchIsOpenedExtended(false)} />
+        <Search
+          inputProps={{ onBlur: () => setSearchIsOpenedExtended(false) }}
+        />
       ) : (
         <Header onSearchButtonClick={() => setSearchIsOpenedExtended(true)} />
       )}

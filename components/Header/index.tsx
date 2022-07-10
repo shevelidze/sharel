@@ -5,6 +5,7 @@ import useMobile from '../../lib/useMobile';
 import Burger from './Burger.svg';
 import Drawer from '../Drawer';
 import User from '../User';
+import SearchIcon from '../Search/SearchIcon.svg';
 
 const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
   onSearchButtonClick,
@@ -22,11 +23,13 @@ const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
           <h1 className={styles.logo}>sharel</h1>
         </div>
         {isMobile ? (
-          <button onClick={onSearchButtonClick}>open search</button>
+          <SearchIcon onClick={onSearchButtonClick} />
         ) : (
           <>
             <Search />
-            <div className={styles.userWrapper}><User /></div>
+            <div className={styles.userWrapper}>
+              <User />
+            </div>
           </>
         )}
       </div>
