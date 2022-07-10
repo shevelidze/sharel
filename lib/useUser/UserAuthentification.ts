@@ -35,7 +35,7 @@ export default class UserAuthentification {
 
     try {
       const decoded = jwt.decode(this.refreshToken, { json: true });
-      if (decoded === null || typeof decoded.id !== 'number')
+      if (decoded === null || typeof decoded.sessionId !== 'number')
         throw new UnauthorizedError();
 
       this.id = decoded.id;
@@ -69,7 +69,7 @@ export default class UserAuthentification {
     if (dataResponse.status === 403) {
       this.refreshingPromise = fetch('/api/auth/refresh', {
         headers: {
-          Authorization: this.refreshToken,
+          Authorization: `Bearer ${this.refreshToken}`,
         },
       });
       const refreshResponse = await this.refreshingPromise;

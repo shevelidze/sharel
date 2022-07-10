@@ -7,6 +7,7 @@ import {
   useChain,
   animated,
 } from '@react-spring/web';
+import User from '../User';
 
 const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
   isOpened,
@@ -28,6 +29,7 @@ const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
   return (
     <>
       <animated.div style={drawerStyleProps} className={styles.drawer}>
+        <User />
         <div>Drawer</div>
       </animated.div>
       {darknessTransition(

@@ -21,15 +21,29 @@ export class ApiError {
   message: string;
 }
 
-export class InvalidAccessTokenApiError extends ApiError {
-  constructor() {
-    super(401, 0, 'Invalid access token.');
+type TokenType = 'access' | 'refresh';
+
+export class InvalidTokenApiError extends ApiError {
+  constructor(type: TokenType) {
+    super(401, 0, `Invalid ${type} token.`);
   }
 }
 
-export class AccessTokenExpiredApiError extends ApiError {
+export class InvalidSessionApiError extends ApiError {
   constructor() {
-    super(403, 1, 'Your access token has been expired.');
+    super(401, 6, `Invalid session. Your refresh token is not valid.`);
+  }
+}
+
+export class TokenExpiredApiError extends ApiError {
+  constructor(type: TokenType) {
+    super(403, 1, `Your ${type} token has been expired.`);
+  }
+}
+
+export class InvalidTokenTypeApiError extends ApiError {
+  constructor(expected: TokenType, got: TokenType) {
+    super(400, 5, `Invalid token type. Expected ${expected}, but got ${got}.`);
   }
 }
 
