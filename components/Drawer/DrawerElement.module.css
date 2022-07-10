@@ -12,10 +12,11 @@ button.root {
 }
 
 .root {
-  color: var(--secondary-text-color);
+  color: var(--text-primary-color);
   margin-bottom: .5em;
+  transition: transform var(--regular-transition)
 }
 
 .root:hover {
-  color: var(--primary-text-color);
+  transform: translateX(1em);
 }
