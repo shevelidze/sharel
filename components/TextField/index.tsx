@@ -30,17 +30,19 @@ const TextField: React.FC<TextFieldProps & React.PropsWithChildren> = ({
           placeholder={placeholder}
           {...inputProps}
         />
-        <div className={styles.icons}>
-          {children}
-          {isHidable ? (
-            <VisibilityIndicator
-              isHidden={isHidden}
-              onClick={() => {
-                setIsHidden(!isHidden);
-              }}
-            />
-          ) : null}
-        </div>
+        {(children || isHidable) && (
+          <div className={styles.icons}>
+            {children}
+            {isHidable ? (
+              <VisibilityIndicator
+                isHidden={isHidden}
+                onClick={() => {
+                  setIsHidden(!isHidden);
+                }}
+              />
+            ) : null}
+          </div>
+        )}
       </div>
 
       {error !== undefined ? <div className={styles.error}>{error}</div> : null}

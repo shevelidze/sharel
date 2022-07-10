@@ -4,6 +4,7 @@ import styles from './Header.module.css';
 import useMobile from '../../lib/useMobile';
 import Burger from './Burger.svg';
 import Drawer from '../Drawer';
+import User from '../User';
 
 const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
   onSearchButtonClick,
@@ -23,7 +24,10 @@ const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
         {isMobile ? (
           <button onClick={onSearchButtonClick}>open search</button>
         ) : (
-          <Search />
+          <>
+            <Search />
+            <div className={styles.userWrapper}><User /></div>
+          </>
         )}
       </div>
       <Drawer isOpened={drawerIsOpened} toggle={toggleDrawer} />

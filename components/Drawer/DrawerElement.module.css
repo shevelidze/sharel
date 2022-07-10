@@ -1,0 +1,21 @@
+a.root {
+  text-decoration: none;
+}
+
+button.root {
+  border: none;
+  background: none;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  padding: 0;
+}
+
+.root {
+  color: var(--secondary-text-color);
+  margin-bottom: .5em;
+}
+
+.root:hover {
+  color: var(--primary-text-color);
+}

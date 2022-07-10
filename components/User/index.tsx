@@ -16,7 +16,7 @@ const User: React.FC = () => {
       ) : (
         <Loader />
       )}
-      <Avatar />
+      <Avatar style={{ maxWidth: '48px', minWidth: '48px' }} />
     </div>
   );
 };

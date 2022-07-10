@@ -35,6 +35,7 @@ const refresh: NextApiHandler = async (req, res) => {
       },
       data: {
         refresh_token_id: oldRefreshPayload.id + 1,
+        last_used_timestamp: new Date(),
       },
       where: {
         id: oldRefreshPayload.sessionId,

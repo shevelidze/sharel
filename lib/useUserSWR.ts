@@ -20,8 +20,6 @@ export default function useUserSWR([method, path, body]: [
         ? user.sendJson(path, body, { method })
         : user.fetch(path, { method }));
 
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
       return {
         ...response,
         bodyObject: await response.json(),

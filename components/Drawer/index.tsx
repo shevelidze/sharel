@@ -8,6 +8,9 @@ import {
   animated,
 } from '@react-spring/web';
 import User from '../User';
+import useUser from '../../lib/useUser';
+import DrawerLink from './DrawerLink';
+import DrawerButton from './DrawerButton';
 
 const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
   isOpened,
@@ -26,11 +29,17 @@ const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
     ref: darknessSpringRef,
   });
   useChain([drawerSpringRef, darknessSpringRef], [0, 0]);
+
+  const [user, signIn, signOut] = useUser();
+
   return (
     <>
       <animated.div style={drawerStyleProps} className={styles.drawer}>
         <User />
-        <div>Drawer</div>
+        <DrawerLink href="/home">Home</DrawerLink>
+        <DrawerLink href="/my_posts">My posts</DrawerLink>
+        <DrawerLink href="/sessions">Sessions</DrawerLink>
+        <DrawerButton onClick={() => signOut()}>Sign out</DrawerButton>
       </animated.div>
       {darknessTransition(
         (styleProps, item) =>

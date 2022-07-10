@@ -2,10 +2,20 @@
   height: 100vh;
   position: fixed;
   top: 0;
-  padding: .5em;
+  padding: 1em;
   background-color: var(--primary-color);
   z-index: 1002;
   max-width: calc(100vw - 5em);
+
+  min-width: min-content;
+}
+
+.drawer>* {
+  display: block;
+}
+
+.drawer>*:first-child {
+  margin-bottom: 1em;
 }
 
 .darkness {
