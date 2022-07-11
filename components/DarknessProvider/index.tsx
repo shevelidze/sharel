@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './Darkness.module.css';
 import { Transition, animated } from '@react-spring/web';
 import DarknessContext, {

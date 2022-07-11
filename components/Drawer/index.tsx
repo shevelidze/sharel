@@ -7,6 +7,7 @@ import DrawerLink from './DrawerLink';
 import DrawerButton from './DrawerButton';
 import DrawerContext from './DrawerContext';
 import useDarkness from '../../lib/useDarkness';
+import useMenu from '../../lib/useMenu';
 
 const Drawer: React.FC<{
   isOpened: boolean;
@@ -31,6 +32,7 @@ const Drawer: React.FC<{
   }, [addClickHandler]);
 
   const [user, signIn, signOut] = useUser();
+  const setMenu = useMenu();
 
   return (
     <>
@@ -39,7 +41,9 @@ const Drawer: React.FC<{
         <DrawerContext.Provider value={close}>
           <DrawerLink href="/home">Home</DrawerLink>
           <DrawerLink href="/my_posts">My posts</DrawerLink>
-          <DrawerLink href="/sessions">Sessions</DrawerLink>
+          <DrawerButton onClick={() => setMenu(<h1>Sessions</h1>)}>
+            Sessions
+          </DrawerButton>
           <DrawerButton onClick={() => signOut()}>Sign out</DrawerButton>
         </DrawerContext.Provider>
       </animated.div>
