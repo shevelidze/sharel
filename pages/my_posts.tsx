@@ -4,8 +4,8 @@ import MainLayout from '../components/MainLayout';
 
 export const getServerSideProps = checkIfAuthorized;
 
-const Home: NextPage = () => {
-  return <MainLayout>Home</MainLayout>;
+const MyPosts: NextPage = () => {
+  return <MainLayout>My posts</MainLayout>;
 };
 
-export default Home;
+export default MyPosts;

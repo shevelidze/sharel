@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Drawer.module.css';
 import {
   useSpring,
@@ -11,6 +11,7 @@ import User from '../User';
 import useUser from '../../lib/useUser';
 import DrawerLink from './DrawerLink';
 import DrawerButton from './DrawerButton';
+import DrawerContext from './DrawerContext';
 
 const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
   isOpened,
@@ -36,10 +37,12 @@ const Drawer: React.FC<{ isOpened: boolean; toggle: () => void }> = ({
     <>
       <animated.div style={drawerStyleProps} className={styles.drawer}>
         <User />
-        <DrawerLink href="/home">Home</DrawerLink>
-        <DrawerLink href="/my_posts">My posts</DrawerLink>
-        <DrawerLink href="/sessions">Sessions</DrawerLink>
-        <DrawerButton onClick={() => signOut()}>Sign out</DrawerButton>
+        <DrawerContext.Provider value={toggle}>
+          <DrawerLink href="/home">Home</DrawerLink>
+          <DrawerLink href="/my_posts">My posts</DrawerLink>
+          <DrawerLink href="/sessions">Sessions</DrawerLink>
+          <DrawerButton onClick={() => signOut()}>Sign out</DrawerButton>
+        </DrawerContext.Provider>
       </animated.div>
       {darknessTransition(
         (styleProps, item) =>

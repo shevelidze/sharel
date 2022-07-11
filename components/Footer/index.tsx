@@ -1,13 +1,28 @@
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from './socialIcons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  YoutubeIcon,
+  TwitterIcon,
+} from './socialIcons';
 import React from 'react';
+import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {
   return (
-    <>
-      <FacebookIcon />
-      <InstagramIcon />
-      <YoutubeIcon />
-    </>
+    <div className={styles.root}>
+      <div className={styles.content}>
+        <div>
+          <div>© 2022 sharel</div>
+          <div className={styles.socialIcons}>
+            <FacebookIcon />
+            <InstagramIcon />
+            <YoutubeIcon />
+            <TwitterIcon />
+          </div>
+        </div>
+        <h1>sharel</h1>
+      </div>
+    </div>
   );
 };
 
