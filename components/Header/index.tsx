@@ -13,13 +13,11 @@ const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
   const isMobile = useMobile();
   const [drawerIsOpened, setDrawerIsOpened] = useState(false);
 
-  const toggleDrawer = () => setDrawerIsOpened(!drawerIsOpened);
-
   return (
     <>
       <div className={styles.root}>
         <div className={styles.leftSection}>
-          <Burger onClick={toggleDrawer} />
+          <Burger onClick={() => setDrawerIsOpened(true)} />
           <h1 className={styles.logo}>sharel</h1>
         </div>
         {isMobile ? (
@@ -33,7 +31,10 @@ const Header: React.FC<{ onSearchButtonClick: () => void }> = ({
           </>
         )}
       </div>
-      <Drawer isOpened={drawerIsOpened} toggle={toggleDrawer} />
+      <Drawer
+        isOpened={drawerIsOpened}
+        close={() => setDrawerIsOpened(false)}
+      />
     </>
   );
 };
