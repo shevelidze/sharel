@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imageWrapper {
+  padding: min(5em, 10vw);
+  box-sizing: border-box;
+}
+
+.buttonsWrapper>*:not(:last-child) {
+  margin-right: .5rem;
+}
