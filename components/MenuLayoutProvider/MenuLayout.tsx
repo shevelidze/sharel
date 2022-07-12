@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Transition, animated } from '@react-spring/web';
+import useMobile from '../../lib/useMobile';
 import useDarkness from '../../lib/useDarkness';
 import styles from './MenuLayout.module.css';
 
@@ -22,12 +23,20 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ children, close }) => {
     };
   }, [addClickHandler]);
 
+  const isMobile = useMobile();
+
   return (
     <Transition
       items={children !== null}
-      from={{ opacity: 0, '--offsetY': '10rem' }}
-      enter={{ opacity: 1, '--offsetY': '0rem' }}
-      leave={{ opacity: 0 }}
+      from={
+        isMobile
+          ? { '--bottom': '-100%' }
+          : { opacity: 0, '--offsetY': '10rem' }
+      }
+      enter={
+        isMobile ? { '--bottom': '0%' } : { opacity: 1, '--offsetY': '0rem' }
+      }
+      leave={isMobile ? { '--bottom': '-100%' } : { opacity: 0 }}
     >
       {(styleProps, item) =>
         item && (
