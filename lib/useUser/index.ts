@@ -18,7 +18,7 @@ export default function useUser(): [
   SignOut
 ] {
   const router = useRouter();
-  const [user, updateUser] = useContext(UserContext);
+  const [user, updateUser, signOut] = useContext(UserContext);
   return [
     user,
     (tokens, redirect = true) => {
@@ -26,21 +26,7 @@ export default function useUser(): [
       updateUser();
       if (redirect) router.replace('/home');
     },
-    async (redirect = true) => {
-      if (user !== null) {
-        const fetchResult = await fetch('/api/auth/sign_out', {
-          headers: {
-            Authorization: `Bearer ${user.refreshToken}`,
-          },
-        });
-        if (!fetchResult.ok) alertUnknownError();
-      }
-      localStorage.removeItem('userAccessToken');
-      localStorage.removeItem('userRefreshToken');
-      document.cookie = 'is_authorized=; Max-Age=0';
-      updateUser();
-      if (redirect) router.replace('/');
-    },
+    signOut,
   ];
 }
 

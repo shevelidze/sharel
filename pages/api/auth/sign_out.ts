@@ -8,7 +8,7 @@ const signOut: NextApiHandler = async (req, res) => {
   if (tokenPayload === undefined) return;
 
   const userRefreshTokenPayload = tokenPayload as UserRefreshTokenPayload;
-  await prisma.sessions.delete({
+  await prisma.sessions.deleteMany({
     where: {
       id: userRefreshTokenPayload.sessionId,
     },

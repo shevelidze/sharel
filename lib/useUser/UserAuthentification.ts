@@ -17,7 +17,7 @@ export class ErrorOnRefreshing extends Error {
 }
 
 export default class UserAuthentification {
-  static getAuthentification() {
+  static getAuthentification(onInvalidSession: () => void = () => {}) {
     const accessTokenLocalValue = localStorage.getItem('userAccessToken');
     const refreshTokenLocalValue = localStorage.getItem('userRefreshToken');
 
@@ -26,12 +26,18 @@ export default class UserAuthentification {
 
     return new UserAuthentification(
       accessTokenLocalValue,
-      refreshTokenLocalValue
+      refreshTokenLocalValue,
+      onInvalidSession
     );
   }
-  constructor(accessToken: string, refreshToken: string) {
+  constructor(
+    accessToken: string,
+    refreshToken: string,
+    onInvalidSession: () => void
+  ) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
+    this.onInvalidSession = onInvalidSession;
 
     try {
       const decoded = jwt.decode(this.refreshToken, { json: true });
@@ -86,9 +92,8 @@ export default class UserAuthentification {
         this.accessToken = newTokens.access;
         this.refreshToken = newTokens.refresh;
       } else if (refreshResponse.status === 401) {
-        localStorage.removeItem('JWTAccessToken');
-        localStorage.removeItem('JWTRefreshToken');
-        console.log('Session is not already valid.');
+        console.log('Session is already not valid.');
+        this.onInvalidSession();
       } else throw new ErrorOnRefreshing(refreshResponse);
     };
 
@@ -103,4 +108,5 @@ export default class UserAuthentification {
   accessToken: string;
   refreshToken: string;
   refreshingPromise: Promise<void> | null;
+  onInvalidSession: () => void;
 }
