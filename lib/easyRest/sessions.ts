@@ -49,8 +49,15 @@ const fetcher: EasyRest.Fetcher = async ({ auth, ids, include }) => {
   return prismaFetchResult;
 };
 
+const deleter: EasyRest.Deleter = async (args) => {
+  await prisma.sessions.deleteMany({
+    where: { AND: { id: parseInt(args.id), user_id: args.auth.userId } },
+  });
+};
+
 const sessions: EasyRest.EntityBlueprint = {
   fetcher,
+  deleter,
   members: {
     user_agent: EasyRest.string(),
     ip_address: EasyRest.string(),
