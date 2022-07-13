@@ -60,32 +60,11 @@ export default class UserAuthentification {
         },
       });
 
-    if (this.refreshingPromise) {
-      const refreshResponse = await this.refreshingPromise;
-      if (!refreshResponse.ok) throw new ErrorOnRefreshing(refreshResponse);
-    }
-
     const dataResponse = await dataFetch();
+
     if (dataResponse.status === 403) {
-      this.refreshingPromise = fetch('/api/auth/refresh', {
-        headers: {
-          Authorization: `Bearer ${this.refreshToken}`,
-        },
-      });
-      const refreshResponse = await this.refreshingPromise;
-      this.refreshingPromise = null;
-      if (refreshResponse.ok) {
-        console.log('Tokens have been successfully refreshed.');
-        const newTokens = await refreshResponse.json();
-        saveTokens(newTokens);
-        this.accessToken = newTokens.access;
-        this.refreshToken = newTokens.refresh;
-        return await dataFetch();
-      } else if (refreshResponse.status === 401) {
-        localStorage.removeItem('JWTAccessToken');
-        localStorage.removeItem('JWTRefreshToken');
-        console.log('Session is not already valid.');
-      } else throw new ErrorOnRefreshing(refreshResponse);
+      await this.refreshTokens();
+      return await dataFetch();
     }
 
     return dataResponse;
@@ -93,8 +72,35 @@ export default class UserAuthentification {
   sendJson(input: RequestInfo, body: any, init?: RequestInit) {
     return sendJson(input, body, init, this.fetch.bind(this));
   }
+  async refreshTokens() {
+    const refreshTask = async () => {
+      const refreshResponse = await fetch('/api/auth/refresh', {
+        headers: {
+          Authorization: `Bearer ${this.refreshToken}`,
+        },
+      });
+      if (refreshResponse.ok) {
+        console.log('Tokens have been successfully refreshed.');
+        const newTokens = await refreshResponse.json();
+        saveTokens(newTokens);
+        this.accessToken = newTokens.access;
+        this.refreshToken = newTokens.refresh;
+      } else if (refreshResponse.status === 401) {
+        localStorage.removeItem('JWTAccessToken');
+        localStorage.removeItem('JWTRefreshToken');
+        console.log('Session is not already valid.');
+      } else throw new ErrorOnRefreshing(refreshResponse);
+    };
+
+    if (this.refreshingPromise !== null) await this.refreshingPromise;
+    else {
+      this.refreshingPromise = refreshTask();
+      await this.refreshingPromise;
+      this.refreshingPromise = null;
+    }
+  }
   id: number;
   accessToken: string;
   refreshToken: string;
-  refreshingPromise: Promise<Response> | null;
+  refreshingPromise: Promise<void> | null;
 }

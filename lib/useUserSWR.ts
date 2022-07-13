@@ -5,11 +5,7 @@ interface PreparsedResponse extends Response {
   bodyObject: any;
 }
 
-export default function useUserSWR([method, path, body]: [
-  string,
-  string,
-  any?
-]) {
+export default function useUserSWR(method: string, path: string, body?: any) {
   const [user] = useUser();
 
   return useSWR(
