@@ -22,9 +22,7 @@ const entities: NextApiHandler = async (req, res) => {
       query,
       req.method || 'GET',
       req.body,
-      {
-        userId: tokenPayload.userId,
-      }
+      tokenPayload
     );
     res.status(apiResponse.code).json(apiResponse.body);
   } catch (e) {

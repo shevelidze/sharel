@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0 1em;
+}
+
+.root>* {
+  min-width: min-content;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+}
+
+.lastUsedDate {
+  color: var(--secondary-text-color);
+}
+
+.contentWrapper {
+  min-width: 0;
+}

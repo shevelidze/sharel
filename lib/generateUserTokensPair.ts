@@ -14,6 +14,7 @@ export interface UserTokenPayload {
 export interface UserAccessTokenPayload extends UserTokenPayload {
   type: 'access';
   userId: number;
+  sessionId: number;
 }
 
 export interface UserRefreshTokenPayload extends UserTokenPayload {
@@ -27,11 +28,15 @@ export default function generateUserTokensPair(
   refreshTokenId: number,
   sessionId: number
 ): TokensPair {
-  const accessPayload: UserAccessTokenPayload = { userId, type: 'access' };
+  const accessPayload: UserAccessTokenPayload = {
+    userId,
+    type: 'access',
+    sessionId,
+  };
   const refreshPayload: UserRefreshTokenPayload = {
     type: 'refresh',
     id: refreshTokenId,
-    sessionId: sessionId,
+    sessionId,
   };
   return {
     access: jwt.sign(accessPayload, JWTSecretKey, {

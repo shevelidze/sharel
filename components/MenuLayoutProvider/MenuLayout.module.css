@@ -8,6 +8,11 @@
   background: var(--primary-color);
 }
 
+.root>div {
+  overflow: hidden auto;
+  height: 100%;
+}
+
 @media screen and (width > 900px) {
   .root {
     top: 50%;

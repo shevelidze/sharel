@@ -41,7 +41,7 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ children, close }) => {
       {(styleProps, item) =>
         item && (
           <animated.div className={styles.root} style={styleProps}>
-            {children}
+            <div>{children}</div>
           </animated.div>
         )
       }
