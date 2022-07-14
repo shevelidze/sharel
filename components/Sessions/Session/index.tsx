@@ -1,6 +1,6 @@
 import React from 'react';
 import Phone from './Phone.svg';
-import TrashCan from './TrashCan.svg';
+import TrashCan from '../../TrashCan';
 import styles from './Session.module.css';
 
 export interface SessionProps {

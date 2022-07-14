@@ -14,6 +14,10 @@
   border: none;
 }
 
+.removeButton>svg * {
+  fill: var(--subscription-color);
+}
+
 .lastUsedDate {
   color: var(--secondary-text-color);
 }

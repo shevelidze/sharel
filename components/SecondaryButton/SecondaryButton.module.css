@@ -1,0 +1,19 @@
+.root {
+  background: var(--tertiary-color);
+  color: var(--primary-text-color);
+  border: none;
+  padding: 1em 2em;
+  border-radius: 2em;
+  font-family: inherit;
+  font-weight: var(--input-font-weight);
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+
+.fixed {
+  position: fixed;
+  --distance: 2rem;
+  bottom: var(--distance);
+  right: var(--distance);
+}
