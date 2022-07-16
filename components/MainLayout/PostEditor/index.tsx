@@ -3,6 +3,7 @@ import { SendButton } from '../../Inputs';
 import styles from './PostButton.module.css';
 import Textarea from '../../Inputs/Textarea';
 import { Form, Formik } from 'formik';
+import { FormikTextarea } from '../../Inputs';
 
 const PostEditor: React.FC = () => {
   return (
@@ -17,7 +18,10 @@ const PostEditor: React.FC = () => {
           <div className={styles.buttonsWrapper}>
             <SendButton type="submit" />
           </div>
-          <Textarea placeholder="New post..." name="content" />
+          <FormikTextarea
+            textareaProps={{ placeholder: 'New post...' }}
+            formikFieldProps={{ name: 'content' }}
+          />
         </Form>
       </Formik>
     </div>

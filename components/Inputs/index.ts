@@ -4,3 +4,4 @@ export { default as SendButton } from './SendButton';
 export { default as SecondaryButton } from './SecondaryButton';
 export { default as FormikTextField } from './FormikTextField';
 export { default as DeleteButton } from './DeleteButton';
+export { default as FormikTextarea } from './FormikTextarea';
