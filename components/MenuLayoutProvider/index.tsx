@@ -10,8 +10,10 @@ const MenuLayoutProvider: React.FC<React.PropsWithChildren> = ({
 
   return (
     <>
-      <MenuContext.Provider value={setElement}>{children}</MenuContext.Provider>
-      <MenuLayout close={close}>{element}</MenuLayout>
+      <MenuContext.Provider value={setElement}>
+        {children}
+        <MenuLayout close={close}>{element}</MenuLayout>
+      </MenuContext.Provider>
     </>
   );
 };

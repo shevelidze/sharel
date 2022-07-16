@@ -17,6 +17,11 @@ const entities: NextApiHandler = async (req, res) => {
       ? [req.query.parameters]
       : req.query.parameters;
 
+  console.log(req.body);
+  console.log(typeof req.body);
+  console.log(tokenPayload);
+  console.log(req.method);
+
   try {
     const apiResponse = await easyRest.processQuery(
       query,

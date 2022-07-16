@@ -62,6 +62,7 @@ export default class UserAuthentification {
       fetch(input, {
         ...init,
         headers: {
+          ...init?.headers,
           Authorization: `Bearer ${this.accessToken}`,
         },
       });
