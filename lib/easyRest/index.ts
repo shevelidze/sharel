@@ -1,10 +1,14 @@
 import EasyRest from '@shevelidze/easyrest';
-import users from './users';
-import sessions from './sessions';
+import user from './user';
+import session from './session';
+import my_post from './my_post';
+import post from './post';
 
 const easyRest = new EasyRest.Instance({
-  users,
-  sessions,
+  user,
+  session,
+  my_post,
+  post,
 });
 
 export default easyRest;

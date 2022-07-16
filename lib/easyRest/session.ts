@@ -1,10 +1,6 @@
 import EasyRest from '@shevelidze/easyrest';
 import prisma from '../prisma';
 
-function getTimestamp(date: Date): number {
-  return Math.floor(date.getTime() / 1000);
-}
-
 const fetcher: EasyRest.Fetcher = async ({ auth, ids, include }) => {
   const select = Object.assign({}, include);
   delete select.is_current;
@@ -20,7 +16,7 @@ const fetcher: EasyRest.Fetcher = async ({ auth, ids, include }) => {
       },
     });
   else {
-    const parsedIds = ids.map((value) => parseInt(value));
+    const parsedIds = ids.map((el) => parseInt(el));
     prismaFetchResult = await prisma.sessions.findMany({
       where: {
         AND: {
@@ -36,14 +32,6 @@ const fetcher: EasyRest.Fetcher = async ({ auth, ids, include }) => {
       session.is_current = session.id === auth.sessionId;
       if (!include.id) delete session.id;
     }
-
-    if (session.authentification_timestamp)
-      session.authentification_timestamp = getTimestamp(
-        session.authentification_timestamp
-      );
-
-    if (session.last_used_timestamp)
-      session.last_used_timestamp = getTimestamp(session.last_used_timestamp);
   }
 
   return prismaFetchResult;
@@ -55,7 +43,7 @@ const deleter: EasyRest.Deleter = async (args) => {
   });
 };
 
-const sessions: EasyRest.EntityBlueprint = {
+const session: EasyRest.EntityBlueprint = {
   fetcher,
   deleter,
   members: {
@@ -68,4 +56,4 @@ const sessions: EasyRest.EntityBlueprint = {
   methods: {},
 };
 
-export default sessions;
+export default session;

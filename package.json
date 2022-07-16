@@ -12,7 +12,7 @@
   "dependencies": {
     "@prisma/client": "3.15.2",
     "@react-spring/web": "^9.4.5",
-    "@shevelidze/easyrest": "^0.1.6",
+    "@shevelidze/easyrest": "^0.1.9",
     "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",

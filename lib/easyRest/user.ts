@@ -31,7 +31,7 @@ const fetcher: EasyRest.Fetcher = async ({ ids, include, auth }) => {
   }
 };
 
-const users: EasyRest.EntityBlueprint = {
+const user: EasyRest.EntityBlueprint = {
   members: {
     first_name: EasyRest.string(),
     last_name: EasyRest.string(),
@@ -41,4 +41,4 @@ const users: EasyRest.EntityBlueprint = {
   fetcher,
 };
 
-export default users;
+export default user;

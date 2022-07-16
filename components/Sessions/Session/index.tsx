@@ -6,7 +6,7 @@ import styles from './Session.module.css';
 export interface SessionProps {
   ipAddress: string;
   userAgent: string;
-  lastUsedDate?: string;
+  lastUsedDate?: Date;
   onRemoveButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -23,7 +23,7 @@ const Session: React.FC<SessionProps> = ({
         <div>{ipAddress}</div>
         <div>{userAgent}</div>
         <div className={styles.lastUsedDate}>
-          {lastUsedDate && `Last activity in ${lastUsedDate}`}
+          {lastUsedDate && `Last activity in ${lastUsedDate.toLocaleString()}`}
         </div>
       </div>
       <button onClick={onRemoveButtonClick} className={styles.removeButton}>

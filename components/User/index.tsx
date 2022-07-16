@@ -5,7 +5,7 @@ import useUserSWR from '../../lib/useUserSWR';
 import Loader from '../Loader';
 
 const User: React.FC = () => {
-  const userResponse = useUserSWR('GET', '/api/entities/users/me');
+  const userResponse = useUserSWR('GET', '/api/entities/user/me');
   if (userResponse.error) throw new Error('Failed to load user data.');
   return (
     <div className={styles.root}>

@@ -7,7 +7,7 @@ import Session from './Session';
 import styles from './Sessions.module.css';
 
 const Sessions: React.FC = () => {
-  const sessionsResponse = useUserSWR('GET', '/api/entities/sessions');
+  const sessionsResponse = useUserSWR('GET', '/api/entities/session');
 
   const { mutate } = useSWRConfig();
   const [user, signIn, signOut] = useUser();
@@ -35,14 +35,14 @@ const Sessions: React.FC = () => {
       if (user === null)
         throw new Error('Failed to delete session. User is not authorized.');
 
-      const fetchResult = await user.fetch(`/api/entities/sessions/${id}`, {
+      const fetchResult = await user.fetch(`/api/entities/session/${id}`, {
         method: 'DELETE',
       });
       if (!fetchResult.ok)
         throw new Error('Failed to delete session. Unknown error');
 
-      mutate(['GET', '/api/entities/sessions', undefined]);
-      mutate(['GET', `/api/entities/sessions/${id}`, undefined]);
+      mutate(['GET', '/api/entities/session', undefined]);
+      mutate(['GET', `/api/entities/session/${id}`, undefined]);
     };
   };
 
@@ -61,9 +61,7 @@ const Sessions: React.FC = () => {
           key={element.id}
           ipAddress={element.ip_address}
           userAgent={element.user_agent}
-          lastUsedDate={new Date(
-            element.last_used_timestamp * 1000
-          ).toLocaleString()}
+          lastUsedDate={new Date(element.last_used_timestamp)}
           onRemoveButtonClick={createSessionDeleter(element.id)}
         />
       ))}
