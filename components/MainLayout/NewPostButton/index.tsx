@@ -1,5 +1,5 @@
 import React from 'react';
-import SecondaryButton from '../../SecondaryButton';
+import { SecondaryButton } from '../../Inputs';
 import Cross from './Cross.svg';
 import PostEditor from '../PostEditor';
 import useMenu from '../../../lib/useMenu';

@@ -22,7 +22,7 @@
   --title-font-weight: 800;
 
   --regular-shadow: 4px 4px 15px rgba(0, 0, 0, 0.5);
-  --regular-transition: .2s ease-in-out;
+  --regular-transition: .2s ease-out;
 
   --header-height: 5em;
 }
@@ -37,15 +37,16 @@
 html, body {
   margin: 0;
   padding: 0;
-
   background: var(--background-color);
 
+  min-width: min-content;
+}
+
+* {
   font-family: 'Manrope', sans-serif;
   font-size: var(--regular-font-size);
   font-weight: var(--regular-font-weight);
   color: var(--primary-text-color);
-
-  min-width: min-content;
 }
 
 h1 {

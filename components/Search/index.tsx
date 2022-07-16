@@ -1,6 +1,6 @@
 import React from 'react';
 import useMobile from '../../lib/useMobile';
-import TextField, { type TextFieldProps } from '../TextField';
+import TextField, { type TextFieldProps } from '../Inputs/TextField';
 import SearchIcon from './SearchIcon.svg';
 import styles from './Search.module.css';
 

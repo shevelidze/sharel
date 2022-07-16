@@ -1,9 +1,9 @@
 .root {
-  background: var(--tertiary-color);
+  background: var(--secondary-color);
   color: var(--primary-text-color);
   border: none;
-  padding: 1em 2em;
-  border-radius: 2em;
+  padding: 1em 1.5em;
+  border-radius: 1.5em;
   font-family: inherit;
   font-weight: var(--input-font-weight);
   display: flex;

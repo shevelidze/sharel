@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import interfaceDemoImage from './interfaceDemo.png';
-import { LinkButton } from '../Buttons';
+import { LinkButton } from '../Inputs/PrimaryButtons';
 import landingSectionStyles from '../../styles/LandingSection.module.css';
 import styles from './Landing.module.css';
 import useUser from '../../lib/useUser';

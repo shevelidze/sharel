@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Transition, animated } from '@react-spring/web';
-import useMobile from '../../lib/useMobile';
-import useDarkness from '../../lib/useDarkness';
+import useMobile from '../../../lib/useMobile';
+import useDarkness from '../../../lib/useDarkness';
 import styles from './MenuLayout.module.css';
 
 interface MenuLayoutProps extends React.PropsWithChildren {

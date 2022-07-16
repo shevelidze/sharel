@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import checkIfUnauthorized from '../lib/checkIfUnauthorized';
-import FormikTextField from '../components/FormikTextField';
+import { FormikTextField } from '../components/Inputs';
 import { Formik } from 'formik';
-import { RegularButton } from '../components/Buttons';
+import { RegularButton } from '../components/Inputs/PrimaryButtons';
 import StyledFormikForm from '../components/StyledFormikForm';
 import sendJson from '../lib/sendJson';
 import useUser from '../lib/useUser';

@@ -1,0 +1,23 @@
+.root {
+  width: 100%;
+  resize: none;
+  flex-grow: 1;
+  background: var(--secondary-color);
+  border: var(--secondary-color) 2px solid;
+  border-radius: 6px;
+  padding: 1em;
+  color: var(--primary-text-color);
+  font-size: inherit;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color var(--regular-transition);
+}
+
+.root::placeholder {
+  color: var(--tertiary-color);
+}
+
+.root:focus {
+  outline: none;
+  border-color: var(--tertiary-color);
+}
