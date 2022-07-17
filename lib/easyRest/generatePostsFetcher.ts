@@ -9,51 +9,86 @@ export function generatePostsFetcher(my: boolean) {
     if (my) where.user_id = auth.userId;
     else where.user_id = { not: auth.userId };
 
-    const {
-      likes: includeLikes,
-      views: includeViews,
-      is_liked: includeIsLiked,
-      ...select
-    } = include;
+    const { is_liked: includeIsLiked, ...select } = include;
 
-    const fetchResult: any = await prisma.posts.findMany({
+    const fetchResult = await prisma.posts.findMany({
       select: {
         ...select,
+        creation_timestamp: true,
         likes:
-          includeLikes || includeIsLiked
+          include.likes || includeIsLiked
             ? {
                 select: {
                   user_id: true,
                 },
               }
             : false,
-        views: includeViews
-          ? {
+        views: {
+          select: {
+            user_id: true,
+          },
+        },
+        users: {
+          select: {
+            subscriptions_subscriptions_user_idTousers: {
               select: {
-                user_id: true,
+                subscriber_user_id: true,
               },
-            }
-          : false,
+              where: {
+                subscriber_user_id: auth.userId,
+              },
+            },
+          },
+        },
       },
       where,
     });
 
-    for (const post of fetchResult) {
-      if (includeLikes || includeIsLiked) {
+    fetchResult.sort((a, b) => {
+      if (
+        a.users.subscriptions_subscriptions_user_idTousers.length !==
+        b.users.subscriptions_subscriptions_user_idTousers.length
+      ) {
+        return (
+          a.users.subscriptions_subscriptions_user_idTousers.length -
+          b.users.subscriptions_subscriptions_user_idTousers.length
+        );
+      }
+
+      function calculateInterestFactor(target: any) {
+        const secondsInOneDay = 86400;
+        return (
+          (target.views.length + 1) /
+          (((new Date() as any) - (target.creation_timestamp as any)) /
+            (1000 * secondsInOneDay))
+        );
+      }
+
+      return calculateInterestFactor(b) - calculateInterestFactor(a);
+    });
+
+    const anyFetchResult: any = fetchResult;
+
+    for (const post of anyFetchResult) {
+      if (include.likes || includeIsLiked) {
         const likesArray = post.likes;
         delete post.likes;
-        if (includeLikes) post.likes = likesArray.length;
+        if (include.likes) post.likes = likesArray.length;
 
         if (includeIsLiked)
           post.is_liked = likesArray
             .map((el: any) => el.user_id)
             .includes(auth.userId);
       }
-      if (includeLikes) {
+      if (include.views) {
         const viewsArray = post.views;
         delete post.views;
         post.views = viewsArray.length;
-      }
+      } else delete post.views;
+
+      if (!include.creation_timestamp) delete post.creation_timestamp;
+
+      delete post.users;
     }
 
     if (fetchResult.length === 0 && ids !== undefined)

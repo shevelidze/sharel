@@ -8,19 +8,19 @@ datasource db {
 }
 
 model likes {
-  id      Int    @id @default(autoincrement())
-  post_id Int?
-  user_id Int?
-  posts   posts? @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id      Int   @id @default(autoincrement())
+  post_id Int
+  user_id Int
+  posts   posts @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   users @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model posts {
-  id                 Int       @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   content            String
-  creation_timestamp DateTime? @default(now()) @db.Timestamptz(6)
-  user_id            Int?
-  users              users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  creation_timestamp DateTime @default(now()) @db.Timestamptz(6)
+  user_id            Int
+  users              users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   likes              likes[]
   views              views[]
 }
@@ -28,12 +28,12 @@ model posts {
 model sessions {
   id                         Int      @id @default(autoincrement())
   refresh_token_id           Int      @default(1)
-  user_id                    Int?
-  user_agent                 String?
-  ip_address                 String?
+  user_id                    Int
+  user_agent                 String
+  ip_address                 String
   authentification_timestamp DateTime @default(now()) @db.Timestamptz(6)
   last_used_timestamp        DateTime @default(now()) @db.Timestamptz(6)
-  users                      users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model subscriptions {
@@ -51,7 +51,7 @@ model users {
   last_name                                             String
   email                                                 String          @unique
   password_hash                                         String          @db.VarChar(64)
-  registration_timestamp                                DateTime?       @default(now()) @db.Timestamptz(6)
+  registration_timestamp                                DateTime        @default(now()) @db.Timestamptz(6)
   likes                                                 likes[]
   posts                                                 posts[]
   sessions                                              sessions[]
@@ -61,9 +61,9 @@ model users {
 }
 
 model views {
-  id      Int    @id @default(autoincrement())
-  post_id Int?
-  user_id Int?
-  posts   posts? @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id      Int   @id @default(autoincrement())
+  post_id Int
+  user_id Int
+  posts   posts @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   users @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
