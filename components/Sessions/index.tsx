@@ -7,7 +7,10 @@ import Session from './Session';
 import styles from './Sessions.module.css';
 
 const Sessions: React.FC = () => {
-  const sessionsResponse = useUserSWR('GET', '/api/entities/session');
+  const sessionsResponse = useUserSWR({
+    method: 'GET',
+    path: '/api/entities/session',
+  });
 
   const { mutate } = useSWRConfig();
   const [user, signIn, signOut] = useUser();

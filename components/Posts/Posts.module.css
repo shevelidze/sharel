@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+}
+
+.postsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  width: 80vw;
+  max-width: 800px;
+}

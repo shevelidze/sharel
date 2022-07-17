@@ -1,11 +1,16 @@
 import { NextPage } from 'next';
 import checkIfAuthorized from '../lib/checkIfAuthorized';
 import MainLayout from '../components/MainLayout';
+import Posts from '../components/Posts';
 
 export const getServerSideProps = checkIfAuthorized;
 
 const Home: NextPage = () => {
-  return <MainLayout>Home</MainLayout>;
+  return (
+    <MainLayout>
+      <Posts isMy={false} />
+    </MainLayout>
+  );
 };
 
 export default Home;
