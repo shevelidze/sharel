@@ -1639,10 +1639,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.3.tgz#6801033be7ff87a6b7cadaf5b337c9f366a3c4b0"
   integrity sha512-WiBSI6JBIhC6LRIsB2Kwh8DsGTlbBU+mLRxJmAe3LjHTdkDpwIbEOZgoXBbZilk/vlfjK8i6nKRAvIRn1XaIMw==
 
-"@shevelidze/easyrest@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@shevelidze/easyrest/-/easyrest-0.1.9.tgz#d83a1318b0c7223d892b6bbb11854da62a0053a9"
-  integrity sha512-D+y15rwuCzHzEqo+xHFMC0O0Ptxc3waLV+i3REWZTnjREo52sOEIURODDBNs7hDu5MA3EUXXCaL0M9IhVnrbqQ==
+"@shevelidze/easyrest@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@shevelidze/easyrest/-/easyrest-0.1.10.tgz#aa03175891abfc7aa6b77746a7c4d32a48aef532"
+  integrity sha512-Pe29W74roEE3ezPXvtahD7EHjFT7pxVAO68HWOoPxXjw2PMhfimQz9yv25YzN1HZGH6djtOxcbI+Fhaoiy2/dw==
   dependencies:
     jtd "^0.1.1"
 

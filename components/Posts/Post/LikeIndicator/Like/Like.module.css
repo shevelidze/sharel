@@ -1,0 +1,20 @@
+.main * {
+  stroke: var(--secondary-text-color);
+  transition: stroke var(--regular-transition);
+}
+
+.main.activated * {
+  stroke: var(--primary-text-color)
+}
+
+
+.button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.button:active {
+  transform: translateY(.2em);
+}

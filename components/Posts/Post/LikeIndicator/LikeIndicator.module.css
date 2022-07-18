@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  gap: 1ch;
+  align-items: center;
+}
+
+.likes {
+  color: var(--secondary-text-color);
+}

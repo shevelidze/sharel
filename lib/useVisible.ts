@@ -6,7 +6,7 @@ export default function useVisible(ref: React.RefObject<Element>) {
   const observer = useMemo(
     () =>
       new IntersectionObserver(([entity]) => {
-        setIsVisible(entity.isIntersecting || isVisible);
+        if (!isVisible && entity.isIntersecting) setIsVisible(true);
       }),
     []
   );

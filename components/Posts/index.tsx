@@ -11,13 +11,14 @@ export interface PostsProps {
 const Posts: React.FC<PostsProps> = ({ isMy }) => {
   const users = useUserSWR({
     method: 'GET',
-    path: `/api/entities/${isMy ? 'my_post' : 'post'}`,
+    path: `/api/entities/${isMy ? '/user/me' : 'post'}`,
   });
+  const posts = isMy ? users.data?.bodyObject.posts : users.data?.bodyObject;
   return (
     <div className={styles.root}>
       <div className={styles.postsWrapper}>
-        {users.data?.bodyObject.map((el: { id: number }) => (
-          <Post id={el.id} key={el.id} isMy={isMy} />
+        {posts?.map((el: { id: number }) => (
+          <Post id={el.id} key={el.id} />
         )) || <Loader />}
       </div>
     </div>

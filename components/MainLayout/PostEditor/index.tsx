@@ -17,7 +17,7 @@ const PostEditor: React.FC = () => {
     <Formik
       initialValues={{ content: '' }}
       onSubmit={async (values) => {
-        const response = await user.sendJson('/api/entities/my_post/', values, {
+        const response = await user.sendJson('/api/entities/post', values, {
           method: 'PUT',
         });
         if (response.ok) setMenu(null);

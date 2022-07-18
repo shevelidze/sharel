@@ -20,8 +20,14 @@ const fetcher: EasyRest.Fetcher = async ({ ids, include, auth }) => {
         throw new EasyRest.errors.InvalidEntityIdError(el, 'users');
       return parsed;
     });
+    const { posts, ...select } = include;
+    if (posts)
+      (select.posts as any) = {
+        select: { id: true },
+        orderBy: { creation_timestamp: 'desc' },
+      };
     return await prisma.users.findMany({
-      select: include,
+      select,
       where: {
         id: {
           in: parsedIds,
@@ -33,11 +39,13 @@ const fetcher: EasyRest.Fetcher = async ({ ids, include, auth }) => {
 
 const user: EasyRest.EntityBlueprint = {
   members: {
-    first_name: EasyRest.string(),
-    last_name: EasyRest.string(),
+    first_name: EasyRest.string().excludedFromLight(),
+    last_name: EasyRest.string().excludedFromLight(),
     email: EasyRest.string(),
+    posts: EasyRest.array(EasyRest.entity('post'))
+      .lightElements()
+      .excludedFromLight(),
   },
-  methods: {},
   fetcher,
 };
 

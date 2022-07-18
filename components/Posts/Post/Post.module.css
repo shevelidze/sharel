@@ -1,5 +1,26 @@
 .root {
+  --padding: 1.5em;
+}
+
+.body {
   background: var(--primary-color);
-  padding: 2em;
-  border-radius: 2em;
+  padding: var(--padding);
+  border-radius: var(--padding);
+  white-space: pre-line;
+}
+
+.loaderWrapper {
+  height: 300px;
+}
+
+.header {
+  padding: 0 var(--padding);
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  margin-bottom: .5em;
+}
+
+.date {
+  color: var(--secondary-text-color);
 }
