@@ -5,15 +5,16 @@ import Post from './Post';
 import styles from './Posts.module.css';
 
 export interface PostsProps {
-  isMy: boolean;
+  userId?: string | number;
 }
 
-const Posts: React.FC<PostsProps> = ({ isMy }) => {
-  const users = useUserSWR({
+const Posts: React.FC<PostsProps> = ({ userId }) => {
+  const data = useUserSWR({
     method: 'GET',
-    path: `/api/entities/${isMy ? '/user/me' : 'post'}`,
-  });
-  const posts = isMy ? users.data?.bodyObject.posts : users.data?.bodyObject;
+    path: `/api/entities/${userId !== undefined ? `user/${userId}` : 'post'}`,
+  }).data;
+  const posts =
+    userId !== undefined ? data?.bodyObject.posts : data?.bodyObject;
   return (
     <div className={styles.root}>
       <div className={styles.postsWrapper}>

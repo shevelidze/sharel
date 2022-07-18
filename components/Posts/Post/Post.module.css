@@ -24,3 +24,11 @@
 .date {
   color: var(--secondary-text-color);
 }
+
+.user {
+  text-decoration: none;
+}
+
+.user:hover {
+  text-decoration: underline;
+}

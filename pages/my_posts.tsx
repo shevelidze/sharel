@@ -8,7 +8,7 @@ export const getServerSideProps = checkIfAuthorized;
 const MyPosts: NextPage = () => {
   return (
     <MainLayout>
-      <Posts isMy />
+      <Posts userId="me" />
     </MainLayout>
   );
 };

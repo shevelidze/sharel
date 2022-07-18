@@ -1,0 +1,11 @@
+.root {
+  --color: var(--subscription-color);
+  background: none;
+  border: 1px solid var(--color);
+  color: var(--color);
+  padding: 0 1em;
+}
+
+.subscribed {
+  --color: var(--secondary-text-color);
+}

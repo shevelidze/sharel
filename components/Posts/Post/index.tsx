@@ -3,10 +3,10 @@ import styles from './Post.module.css';
 import useUserSWR from '../../../lib/useUserSWR';
 import Loader from '../../Loader';
 import useVisible from '../../../lib/useVisible';
-import Like from './LikeIndicator/Like';
 import useUser from '../../../lib/useUser';
 import { useSWRConfig } from 'swr';
 import LikeIndicator from './LikeIndicator';
+import Link from 'next/link';
 
 export interface PostProps {
   id: number;
@@ -43,9 +43,11 @@ const Post: React.FC<PostProps> = ({ id }) => {
   return (
     <div className={styles.root} ref={rootRef}>
       <div className={styles.header}>
-        <div className={styles.user}>{`${post?.user?.first_name || ''} ${
-          post?.user?.last_name || ''
-        }`}</div>
+        <Link href={`/user/${post?.user.id}`}>
+          <a className={styles.user}>{`${post?.user?.first_name || ''} ${
+            post?.user?.last_name || ''
+          }`}</a>
+        </Link>
         <div className={styles.date}>
           {post ? new Date(post?.creation_timestamp).toLocaleString() : ''}
         </div>

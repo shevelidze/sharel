@@ -6,15 +6,19 @@ const fetcher: EasyRest.Fetcher = async ({ auth, include, ids }) => {
   const where: Prisma.postsWhereInput = {};
   if (ids !== undefined) where.id = { in: ids.map((el) => parseInt(el)) };
 
-  const { is_liked: includeIsLiked, user: userIncluded, ...select } = include;
+  const {
+    is_liked: includeIsLiked,
+    user: userIncluded,
+    ...select
+  } = include as any;
 
   if (userIncluded) {
+    delete userIncluded.subscribers;
+    delete userIncluded.is_subscribed;
     select.users = {
       select: include.user,
     };
   }
-
-  console.log(select.users);
 
   const fetchResult = await prisma.posts.findMany({
     select: {
